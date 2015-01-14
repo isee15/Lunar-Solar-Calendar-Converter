@@ -1,6 +1,7 @@
 # Lunar-Solar-Calendar-Converter
 公历(阳历)农历(阴历)转换，支持时间段从1900-2100
 支持各种编程语言 C#,Objective-C,php,Python 等
+支持Mac，Windows，Android，WP多重平台
 
 ### 基本原理
 * 查表。有2个数据表，对于每一年，一张表存着X年正月初一对应的公历年月日，另一张表存着X年农历每个月的天数以及闰月的月份。
@@ -9,7 +10,7 @@
 
 
 
-##API For C\#
+##API For CSharp or Java
 ```
 /**
 *农历转公历
