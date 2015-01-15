@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lunar Solar Converter</title>
+</head>
+<body>
+<div id="content"></div>
+</body>
+<script type="text/javascript" src="LunarSolarConverter.js"></script>
+<script type="text/javascript">
+    function dump(arr, level) {
+        var dumped_text = "";
+        if (!level) level = 0;
+
+        //The padding given at the beginning of the line.
+        var level_padding = "";
+        for (var j = 0; j < level + 1; j++) level_padding += "    ";
+
+        if (typeof(arr) != 'object') { //Stings/Chars/Numbers etc.
+            dumped_text = "===>" + arr + "<===(" + typeof(arr) + ")";
+        } else {
+            for (var item in arr) {
+                var value = arr[item];
+
+                if (typeof(value) == 'object') { //If it is an array,
+                    dumped_text += level_padding + "'" + item + "' ...\n";
+                    dumped_text += dump(value, level + 1);
+                } else {
+                    dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
+                }
+            }
+        }
+        return dumped_text;
+    }
+    var content = "";
+    var converter = new LunarSolarConverter();
+    var solar = new Solar();
+    solar.solarYear = 2015;
+    solar.solarMonth = 1;
+    solar.solarDay = 15;
+    content += "<br>" + dump(solar);
+    var lunar = converter.SolarToLunar(solar);
+    content += "<br>" + dump(lunar);
+    solar = converter.LunarToSolar(lunar);
+    content += "<br>" + dump(solar);
+    document.getElementById('content').innerHTML = content;
+</script>
+</html>

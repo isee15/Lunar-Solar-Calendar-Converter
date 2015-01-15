@@ -1,7 +1,15 @@
 # Lunar-Solar-Calendar-Converter
 公历(阳历)农历(阴历)转换，支持时间段从1900-2100
-支持各种编程语言 C#,Objective-C,php,Python 等
-支持Mac，Windows，Android，WP多重平台
+支持各种编程语言 C#,java,Objective-C,php,Python,javascript(nodejs)等
+支持Mac，Windows，Android，WP多种平台
+
+###数据验证
+```
+1.用io.js(nodejs)写了一个httpserver，各种语言可以通过下面的http借口验证不同实现的数据一致性。
+在javascript目录下node check.js启动
+
+2.http://localhost:1337/?src=2015,1,15(公历转农历，返回2014,11,25,0) 或者 http://localhost:1337/?src=2014,11,25,0(农历转公历，返回2015,1,15)
+```
 
 ### 基本原理
 * 查表。有2个数据表，对于每一年，一张表存着X年正月初一对应的公历年月日，另一张表存着X年农历每个月的天数以及闰月的月份。
