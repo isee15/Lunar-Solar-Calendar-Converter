@@ -1,6 +1,6 @@
 # Lunar-Solar-Calendar-Converter
-公历(阳历)农历(阴历)转换，支持时间段从1900-2100
-支持各种编程语言 C#,java,Objective-C,php,Python,javascript(nodejs),C/C++等
+公历(阳历)农历(阴历)转换，支持时间段从1900-2100<br>
+支持各种编程语言 C#,java,Objective-C,php,Python,javascript(nodejs),C/C++等<br>
 支持Mac，Windows，Android，WP多种平台
 
 ###数据验证
@@ -84,7 +84,7 @@ this.LunarToSolar = function (lunar)
 this.SolarToLunar = function (solar)
 ```
 
-##API For javascript
+##API For C/C++
 ```
 /**
 *农历转公历
