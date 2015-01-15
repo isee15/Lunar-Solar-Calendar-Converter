@@ -69,3 +69,16 @@ def LunarToSolar(self, lunar):
 */
 def SolarToLunar(self, solar):
 ```
+
+##API For javascript
+```
+/**
+*农历转公历
+*/
+this.LunarToSolar = function (lunar)
+
+/**
+*公历转农历
+*/
+this.SolarToLunar = function (solar)
+```
