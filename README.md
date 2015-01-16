@@ -1,6 +1,6 @@
 # Lunar-Solar-Calendar-Converter
 公历(阳历)农历(阴历)转换，支持时间段从1900-2100<br>
-支持各种编程语言 C#,java,Objective-C,php,Python,javascript(nodejs),C/C++等<br>
+支持各种编程语言 C#,java,Objective-C,php,Python,javascript(nodejs),C/C++,ruby等<br>
 支持Mac，Windows，Android，WP多种平台
 
 ###数据验证
@@ -95,4 +95,17 @@ Solar LunarToSolar(Lunar lunar);
 *公历转农历
 */
 Lunar SolarToLunar(Solar solar);
+```
+
+##API For ruby
+```
+/**
+*农历转公历
+*/
+def LunarToSolar(lunar)
+
+/**
+*公历转农历
+*/
+def SolarToLunar(solar)
 ```
