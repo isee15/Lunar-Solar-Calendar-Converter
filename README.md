@@ -1,6 +1,6 @@
 # Lunar-Solar-Calendar-Converter
 公历(阳历)农历(阴历)转换，支持时间段从1900-2100<br>
-支持各种编程语言 C#,java,Objective-C,php,Python,javascript(nodejs),C/C++,ruby等<br>
+支持各种编程语言 C#,java,Objective-C,php,Python,javascript(nodejs),C/C++,ruby,swift等<br>
 支持Mac，Windows，Android，WP多种平台
 
 ###数据验证
@@ -10,6 +10,8 @@
 
 2.http://localhost:1337/?src=2015,1,15 (公历转农历，返回2014,11,25,0) 或者 
   http://localhost:1337/?src=2014,11,25,0 (农历转公历，返回2015,1,15)
+
+3.比如在C\#版本中,Check.cs 实现了C#与nodejs的数据比对
 ```
 
 ### 基本原理
@@ -108,4 +110,17 @@ def LunarToSolar(lunar)
 *公历转农历
 */
 def SolarToLunar(solar)
+```
+
+##API For swift
+```
+/**
+*农历转公历
+*/
+class func LunarToSolar( lunar:Lunar)->Solar
+
+/**
+*公历转农历
+*/
+class func SolarToLunar( solar:Solar)->Lunar
 ```
