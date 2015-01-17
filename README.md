@@ -1,5 +1,5 @@
-# Lunar-Solar-Calendar-Converter
-公历(阳历)农历(阴历)转换，支持时间段从1900-2100<br>
+# Lunar Solar Calendar Converter
+公历(阳历) 农历(阴历)转换，支持时间段从1900-2100<br>
 支持各种编程语言 C#,java,Objective-C,php,Python,javascript(nodejs),C/C++,ruby,swift等<br>
 支持Mac，Windows，Android，WP多种平台
 
