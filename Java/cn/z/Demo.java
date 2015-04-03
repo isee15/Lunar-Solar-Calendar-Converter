@@ -52,5 +52,6 @@ public class Demo {
 		System.out.println(dump(lunar));
 		solar = LunarSolarConverter.LunarToSolar(lunar);
 		System.out.println(dump(solar));
+		System.out.println(LunarSolarConverter.lunarYearToGanZhi(2015));
 	}
 }
