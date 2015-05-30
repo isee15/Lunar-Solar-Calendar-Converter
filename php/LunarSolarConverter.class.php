@@ -75,7 +75,7 @@ class LunarSolarConverter
     public static function SolarToInt($y, $m, $d)
     {
         $m = ($m + 9) % 12;
-        $y = intval($y - $m / 10);
+        $y = intval($y) - intval($m / 10);
         return intval(365 * $y + intval($y / 4) - intval($y / 100) + intval($y / 400) + intval(($m * 306 + 5) / 10) + ($d - 1));
     }
 
