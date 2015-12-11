@@ -8,10 +8,10 @@
 
 import Foundation
 
-var solar = Solar(solarYear:2015,solarMonth:1,solarDay:15)
+var solar = Solar(solarYear: 2015, solarMonth: 1, solarDay: 15)
 var lunar = LunarSolarConverter.SolarToLunar(solar)
-println("lunar: \(lunar.lunarYear) \(lunar.lunarMonth) \(lunar.lunarDay) \(lunar.isleap)")
+print("lunar: \(lunar.lunarYear) \(lunar.lunarMonth) \(lunar.lunarDay) \(lunar.isleap)")
 solar = LunarSolarConverter.LunarToSolar(lunar);
-println("solar: \(solar.solarYear) \(solar.solarMonth) \(solar.solarDay)")
+print("solar: \(solar.solarYear) \(solar.solarMonth) \(solar.solarDay)")
 
 
