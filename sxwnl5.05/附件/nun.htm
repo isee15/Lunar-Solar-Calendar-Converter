@@ -1,0 +1,22 @@
+
+<script language=javascript src="../源程序/eph0.js"></script>
+<script language=javascript src="../源程序/eph.js"></script>
+<script language=javascript src="../源程序/lunar.js"></script>
+利用内核提取闰月表(年份始于冬至所在月份)<br>
+起始年<input type=text value='-103' id=Cy>
+年数=<input type=text value='200' id=Cn>
+<input type=button onclick='calc()' value='确定'>
+<div id=out></div>
+
+<script language=javascript>
+function calc(){
+ var s='', n=Cn.value-0, y=Cy.value-0;
+ var jd=JD.JD(y,6,1)
+ for(i=0;i<n;i++){
+  SSQ.calcY(jd+i*365.2422-J2000);
+  if(!SSQ.leap) continue;
+  s+=(y+i)+'年 闰'+SSQ.ym[SSQ.leap]+'<br>';
+ }
+ out.innerHTML=s;
+}
+</script>

@@ -1,0 +1,72 @@
+<!DOCTYPE html "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=gb2312"/> 
+<title>日食</title>
+<script src="http://ditu.google.cn/maps?file=api&amp;v=2&amp;key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA&hl=zh-CN" type="text/javascript" charset='utf-8'></script>
+<script language=javascript src=tools.js></script><!--工具函数-->
+<script language=javascript src=eph0.js></script> <!--天文常数等-->
+<script language=javascript src=eph.js></script>  <!--星历模块-->
+<script type="text/javascript">
+var map;
+var PL=new Array();  //折线对象(多条折线)
+function initialize() {
+ if (GBrowserIsCompatible()) {
+   map = new GMap2(document.getElementById("map_canvas"),{draggableCursor:"default"});
+   map.setCenter(new GLatLng(39.917,116.397), 1);  //设置地图的中心
+   map.addControl(new GSmallMapControl()); //加入放缩控制器
+   GEvent.addListener(map, "click", function(lay,JW) { //创建地图的单击事件
+     if(!JW) return;;
+     Ca.innerHTML='经度纬度：'+JW + ' 当前中心：' + map.getCenter() + ' 比例等级：' + map.getZoom()+' ';
+   });
+   GEvent.addListener(map, "zoomend", function(v0,v)   {Ca.innerHTML='放缩比例等级：'+v; }); //创建地图的放缩事件
+ }
+}
+
+function encodePL(v){ //折线数据base64编码
+  var s='';
+  if(v<0) v=~(v<<1); else v<<=1;
+  while(v>=0x20){ //0x20是ascII码中可见字符的开始   
+   s += String.fromCharCode( (v&0x1f)+32+63);
+   v >>= 5; //二进制右移5位
+  }     
+  return s + String.fromCharCode(v+63);
+}  
+function createPL(L,k,co){ //创建折线
+  if(PL[k]) map.removeOverlay(PL[k]); //移除折线
+  if(!L.length) return;
+  var i, a=new Array();
+  for(i=0;i<L.length;i++) //保留5个小数,经度与纬度交换
+    a[i]=Math.round(L[i]*radd*100000);
+  var s=encodePL(a[1]) + encodePL(a[0]); //编码
+  for(i=2; i<a.length; i+=2)
+    s += encodePL(a[i+1]-a[i-1]) + encodePL(a[i]-a[i-2]);
+  PL[k] = new GPolyline.fromEncoded({ color:co, weight:1, points:s, levels:"BBB", zoomFactor: 32, numLevels: 4 }); //创建折线
+  map.addOverlay(PL[k]); //加入折线对象
+}
+
+</script>
+</head>
+
+<body onload="initialize()" onunload="GUnload()">
+本程序调用《寿星天文历》内核计算日食界线，并利用google地图显示。<br>
+公元<input id=C1_y type=text size=4 value=2009>年<input id=C1_m type=text size=2 value=7 maxleng=2>月<input id=C1_d type=text size=2 value=22 maxleng=2>日
+<input type=button onclick="C1_show(1)" value="确定">
+<div id=Ca></div>
+<div id="map_canvas" style="width: 800px; height: 600px"></div>
+
+<script type="text/javascript">
+function C1_show(xm){
+ var jd = JD.JD( year2Ayear(C1_y.value), C1_m.value-0, (C1_d.value-0) ) - J2000;
+ rsGS.init(jd,7);
+ var bu = rsGS.jieX(jd,0); //取界线
+ createPL(bu.L0,0,'red');
+ createPL(bu.L4,1,'green');
+ createPL(bu.L3,2,'green');
+ createPL(bu.L2,3,'green');
+ createPL(bu.L1,4,'green');
+}
+</script>
+
+</body>
+</html>

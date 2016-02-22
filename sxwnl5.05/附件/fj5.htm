@@ -1,0 +1,94 @@
+<script language=javascript src=../源程序/eph0.js></script>
+<script language=javascript src=../源程序/ephB.js></script>
+恒星归算器(归算到J2000.0平位置)
+明码/代码<input type=checkBox id=Ca checked>
+<input type=button onclick="javascript:fx()" value="确定">
+忽短章<input type=checkBox id=Cb checked>
+全测试<input type=checkBox id=Cc checked>
+<input type=button onclick="javascript:te()" value="测试">
+<br>
+<textarea cols=100 rows=15 id=B1>
+库1
+J2008.5,* 0 48 49.767, +5 19 27.03, 0.0507, -1.141, 0.134, 5.74 ,星1019 ,G.Psc 96 K2
+J2008.5,* 0 26 42.175,-42 15 35.34, 0.0210, -0.354, 0.042, 2.40 ,星12   ,Phe α   K0
+J2008.5,= 2 36 25.185, -7 47 41.99,-0.0022, -0.060, 0.006, 5.53 ,星1074 ,Cet 80   M0
+J2008.5,= 2 36 19.295,  5 37 47.81,-0.0019, -0.024, 0.009, 4.87 ,星1072 ,Cet υ   G8
+
+</textarea><br>
+
+<textarea cols=100 rows=15 id=B2></textarea><br>
+<textarea cols=100 rows=15 id=B3></textarea>
+
+<script language=javascript>
+
+
+function kg(s){ //去除一些空格
+  var c='';
+  if(s.substr(4,1)=='°') c = s.substr(0,1)
+  s = c + s.substr(2,s.length-2);
+  s = s.replace(/m|(°)|\'/g,' ');
+  s = s.replace(/h|s|\"/g,'');
+  return s;
+}
+
+
+function fx(){ //反向归算
+ var s = B1.innerText;
+ var i,t, c, r='';
+ var f=new Array(), b=new Array();
+
+ var sn = s.indexOf('\r\n');
+ var km = s.substr(0,sn); //库名称
+ s = s.substr(sn+2, s.length - sn-2);//去除第1行
+ s = s.replace(/(\r\n)+/g, ',');       //把换行符看作逗号
+ //s = s.replace(/, +/g,',');          //去除逗号后的空格
+ s = s.split(',');
+ for(i=0,k=0;i<s.length;i+=9){
+  if(!s[i] || s[i].length<5) continue;
+  //提取历元
+  t = (s[i].substr(1,4)-2000)*365.25;  //当年儒略年首
+  c = s[i].substr(5,2);
+  if(c=='.0') ;
+  if(c=='.5') t += 365.25/2;
+  t /= 36525;
+
+  c = s[i+1];
+  c = c.replace(/(^\s*)|(\s*$)/g, ''); //去除前后空格
+  b[0] = str2rad( c.substr(1,c.length), 1 );
+  b[1] = str2rad( s[i+2], 0 );
+  b[2] = 1;
+
+
+  b = CDllr_D2J(t,b,'P03'); //先旋转，再改自行，确保2008年正确(其实次序先后对低度纬度影响非常小)，常规是先算自行后旋转
+  b[0] -= s[i+3]*t*100/rad*15;
+  b[1] -= s[i+4]*t*100/rad;
+
+
+  r += c.substr(0,1);
+  r += kg( rad2strE(b[0],1,3) )+',';
+  r += kg( rad2strE(b[1],0,2) )+',';
+  r += s[i+3]+',' + s[i+4]+',' + s[i+5] +',';
+  r += s[i+6] +','+ s[i+7]+',' + s[i+8]+'#';
+ }
+ r = km+'#'+r;
+ if(Ca.checked) r=r.replace(/\#/g, '\r\n');
+ else r="'"+r+"'";
+ B2.innerText = r;
+}
+function te(){
+ var u=B2.innerText;
+ if(u.substr(0,1)=="'"){
+   alert('代码形式的星库不能直接测试');
+   return;
+ }
+ var i,s = '', u = getHXK(u,Cc.checked);
+ var Q = Cb.checked ? 35 : 0;
+ var jd = 2925.5-10;
+ for(i=0; i<10; i++, jd+=10)
+   s += hxCalc(jd/36525,u,Q, 0,0,0);
+ B3.innerText = s;
+
+}
+
+
+</script>

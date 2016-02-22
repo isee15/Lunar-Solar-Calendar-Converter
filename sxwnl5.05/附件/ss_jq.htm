@@ -1,0 +1,116 @@
+<script language=javascript src="../源程序/eph0.js"></script>
+<script language=javascript src="../源程序/eph.js"></script>
+<script language=javascript src="../源程序/lunar.js"></script>
+节气表线性拟合<br>
+起始年<input type=text value='1900' id=Cy size=6>
+年数<input type=text value='30' id=Cn size=6>
+项数<input type=text value='2' id=Sn size=2>
+层数<input type=text value='3' id=Gn size=2>
+节气号<input type=text value='0' id=Qn size=2>
+<input type=button onclick='calc()' value='确定'><br><br>
+序号表<br>
+00春分,01清明,02谷雨,03立夏,04小满,05芒种<br>
+06夏至,07小暑,08大暑,09立秋,10处暑,11白露<br>
+12秋分,13寒露,14霜降,15立冬,16小雪,17大雪<br>
+18冬至,19小寒,20大寒,21立春,22雨水,23惊蛰<br><br>
+层数：用于计算最佳分数<br>
+项数：拟合多项式的项数<br><br>
+
+<div id=out></div>
+
+<script language=javascript>
+function jfcz(a){ //最大主元高斯法解方程组,a数组表示方程组(a11,a12,a13,……,b1,  a21,a22,a23,……,b2, a31……)
+ var hn=floor((-1+sqrt(4*a.length+1)+1e-5)/2); //hn是方程行数
+ var i,j,k,hw=hn+1,len=hn*hw; //hw为行宽,len数组元素总个数
+ var p,pm,c,max; //p,pm元素定位变量等临时变量
+ var r=new Array();
+ for(i=0;i<len;i++) r[i]=a[i];
+ for(i=0;i<hn;i++){
+   p=i*hw+i; //p待定主元位置
+   for(j=p,pm=p,max=0;j<len;j+=hw){ //选最大主元,位置在pm
+     c=abs(r[j]);
+     if(c>max) max=c,pm=j;
+   }
+   for(j=0;j<hw-i;j++) c=r[p+j],r[p+j]=r[pm+j],r[pm+j]=c; //行交换
+   for(j=i;j<len;j+=hw){ //高斯消去法
+     if(j==p) continue;  //当前行不能消元
+     c=r[j]/r[p];     //行相减系数
+     for(k=0;k<hw-i;k++) r[j+k]-=r[p+k]*c; //行相减消元
+   }
+ }
+ for(i=0;i<hn;i++) r[i]=r[i*hw+hn]/r[i*hw+i]; //结果
+ r.length=hn; return r;
+}
+function dxs_zxec(f,x,n){//多项式拟合(使用最小二乘法),序列的点数同x数组确定,f数组是x的函数,n是多项式的项数
+  var fc=new Array(), Xk=new Array();
+  var i,j,k,p,len=n*(n+1),xn=x.length;
+  for(i=0;i<len;i++) fc[i]=0;
+  for(k=0;k<xn;k++){
+   for(i=1,Xk[0]=1;i<n;i++) Xk[i]=Xk[i-1]*x[k]; //算出x[k]的各次方
+   for(i=0;i<n;i++){
+     p=i*(n+1);
+     for(j=0;j<n;j++) fc[p+j]+=Xk[j]*Xk[i];
+     fc[p+n]+=f[k]*Xk[i];
+   }
+  }
+  return jfcz(fc);
+}
+
+function dxs(f,x){
+ var i,v=0,X=1;
+ for(i=0;i<f.length;i++) v+=f[i]*X, X*=x;
+ return v;
+}
+function gz(a,n){ //归整时间
+ var i,b=new Array();
+ a=a-Math.floor(a);
+ for(i=0;i<n;i++){
+  a=1/a;
+  b[i]=Math.floor(a);
+  a-=b[i];
+ }
+ var r=new Array(1,b[n-1]);
+ for(i=n-2;i>=0;i--){
+   a=r[1];
+   r[1]=a*b[i]+r[0];
+   r[0]=a;
+ }
+ return r;
+}
+function calc(){
+ var f=new Array(),x=new Array(),i;
+ var n=Cn.value-0; //序列点数(年数)
+ var y=Cy.value-0; //起始年份
+ var q=Qn.value-0; //节气序号
+ var m=Sn.value-0;
+ var dy=103;
+ var s='';
+ for(i=0;i<n;i++){
+  f[i]=obb.qi_accurate((y-2000+q/24+i)*pi2);
+  x[i]=i;
+  s+=JD.JD2str(f[i]+J2000)+'<br>';
+ }
+ var r=dxs_zxec(f,x,m);
+ //求误差
+ var v1=0,v2=0,v;
+ for(i=0;i<n;i++){
+   v = Math.abs(dxs(r,x[i])-f[i]);
+   v2 += v*v;
+   if(v>v1) v1=v;
+ }
+ v2=Math.sqrt(v2/(n-1));
+ v1*=60*24;
+ v2*=60*24;
+
+ var R=gz(r[1],Gn.value-0);
+
+ out.innerHTML=s
+   +'起点 a='+r[0].toFixed(4)+'(J2000起算的儒略日数 UT)<br>'
+   +'斜率 b='+r[1].toFixed(5)+'<br>'
+   +'分数 ' +R[0]+'/'+R[1]+'，即每'+R[1]+'年接近回归原来时间'+'<br>'
+   +'最大误差'+v1.toFixed(2)+'分<br>'
+   +'均方误差'+v2.toFixed(2)+'分<br>'
+   +'节气儒略日数(UT) = a + b*n，式中n是相对起始年偏移的年数'; 
+}
+
+</script>
