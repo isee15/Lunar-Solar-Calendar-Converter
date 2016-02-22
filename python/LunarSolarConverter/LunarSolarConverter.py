@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# latest version in https://github.com/isee15/Lunar-Solar-Calendar-Converter
 __author__ = 'isee15'
 from pprint import pprint
 
