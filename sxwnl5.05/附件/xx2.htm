@@ -1,158 +1,187 @@
 <script language=javascript>
-function int2(v){ return Math.floor(v);}
-var JD={ //ÈÕÆÚÔª¼þ
-  Y:2000, M:1, D:1, h:12, m:0, s:0,
-  toJD:function(){ //¹«Àú×ªÈåÂÔÈÕ
-   var y=this.Y, m=this.M, n=0; //È¡³öÄêÔÂ
-   if(m<=2) m+=12,y--;
-   if(this.Y*372+this.M*31+this.D>=588829)//ÅÐ¶ÏÊÇ·ñÎª¸ñÀï¸ßÀûÀúÈÕ1582*372+10*31+15
-     n =int2(y/100), n =2-n+int2(n/4);//¼Ó°ÙÄêÈò
-   n +=int2(365.25*(y+4716)+0.01);    //¼ÓÉÏÄêÒýÆðµÄÆ«ÒÆÈÕÊý
-   n +=int2(30.6*(m+1))+this.D;       //¼ÓÉÏÔÂÒýÆðµÄÆ«ÒÆÈÕÊý¼°ÈÕÆ«ÒÆÊý
-   n +=((this.s/60+this.m)/60+this.h)/24 - 1524.5;
-   return n;
-  },
-  setFromJD:function(jd){ //ÈåÂÔÈÕÊý×ª¹«Àú
-   jd+=0.5;
-   var A=int2(jd), F=jd-A, D;  //È¡µÃÈÕÊýµÄÕûÊý²¿·ÝA¼°Ð¡Êý²¿·ÖF
-   if(A>=2299161) D=int2((A-1867216.25)/36524.25),A+=1+D-int2(D/4);
-   A     +=1524; //ÏòÇ°ÒÆ4ÄêÁã2¸öÔÂ
-   this.Y =int2((A-122.1)/365.25);//Äê
-   D      =A-int2(365.25*this.Y); //È¥³ýÕûÄêÈÕÊýºóÓàÏÂÈÕÊý
-   this.M =int2(D/30.6001);       //ÔÂÊý
-   this.D =D-int2(this.M*30.6001);//È¥³ýÕûÔÂÈÕÊýºóÓàÏÂÈÕÊý
-   this.Y-=4716; this.M--;
-   if(this.M>12) this.M-=12;
-   if(this.M<=2) this.Y++;
-   //ÈÕµÄÐ¡Êý×ªÎªÊ±·ÖÃë
-   F*=24; this.h=int2(F); F-=this.h;
-   F*=60; this.m=int2(F); F-=this.m;
-   F*=60; this.s=F;
-  },
-  toStr:function(){ //ÈÕÆÚ×ªÎª´®
-   var Y="     "+this.Y,M="0"+this.M, D="0"+this.D;
-   var h=this.h,m=this.m,s=int2(this.s+.5);
-   if(s>=60) s-=60,m++;
-   if(m>=60) m-=60,h++;
-   h="0"+h; m="0"+m; s="0"+s;
-   Y=Y.substr(Y.length-5,5); M=M.substr(M.length-2,2); D=D.substr(D.length-2,2);
-   h=h.substr(h.length-2,2); m=m.substr(m.length-2,2); s=s.substr(s.length-2,2);
-   return Y+"-"+M+"-"+D+" "+h+":"+m+":"+s;
-  }
-};
+    function int2(v) {
+        return Math.floor(v);
+    }
+    var JD = { //ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½
+        Y: 2000, M: 1, D: 1, h: 12, m: 0, s: 0,
+        toJD: function () { //ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            var y = this.Y, m = this.M, n = 0; //È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            if (m <= 2) m += 12, y--;
+            if (this.Y * 372 + this.M * 31 + this.D >= 588829)//ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1582*372+10*31+15
+                n = int2(y / 100), n = 2 - n + int2(n / 4);//ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½
+            n += int2(365.25 * (y + 4716) + 0.01);    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            n += int2(30.6 * (m + 1)) + this.D;       //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½ï¿½ï¿½
+            n += ((this.s / 60 + this.m) / 60 + this.h) / 24 - 1524.5;
+            return n;
+        },
+        setFromJD: function (jd) { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½
+            jd += 0.5;
+            var A = int2(jd), F = jd - A, D;  //È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½Ð¡ï¿½ï¿½ï¿½F
+            if (A >= 2299161) D = int2((A - 1867216.25) / 36524.25), A += 1 + D - int2(D / 4);
+            A += 1524; //ï¿½ï¿½Ç°ï¿½ï¿½4ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½
+            this.Y = int2((A - 122.1) / 365.25);//ï¿½ï¿½
+            D = A - int2(365.25 * this.Y); //È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            this.M = int2(D / 30.6001);       //ï¿½ï¿½ï¿½ï¿½
+            this.D = D - int2(this.M * 30.6001);//È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            this.Y -= 4716;
+            this.M--;
+            if (this.M > 12) this.M -= 12;
+            if (this.M <= 2) this.Y++;
+            //ï¿½Õµï¿½Ð¡ï¿½ï¿½×ªÎªÊ±ï¿½ï¿½ï¿½ï¿½
+            F *= 24;
+            this.h = int2(F);
+            F -= this.h;
+            F *= 60;
+            this.m = int2(F);
+            F -= this.m;
+            F *= 60;
+            this.s = F;
+        },
+        toStr: function () { //ï¿½ï¿½ï¿½ï¿½×ªÎªï¿½ï¿½
+            var Y = "     " + this.Y, M = "0" + this.M, D = "0" + this.D;
+            var h = this.h, m = this.m, s = int2(this.s + .5);
+            if (s >= 60) s -= 60, m++;
+            if (m >= 60) m -= 60, h++;
+            h = "0" + h;
+            m = "0" + m;
+            s = "0" + s;
+            Y = Y.substr(Y.length - 5, 5);
+            M = M.substr(M.length - 2, 2);
+            D = D.substr(D.length - 2, 2);
+            h = h.substr(h.length - 2, 2);
+            m = m.substr(m.length - 2, 2);
+            s = s.substr(s.length - 2, 2);
+            return Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s;
+        }
+    };
 
 
-var gan=Array("¼×","ÒÒ","±û","¶¡","Îì","¼º","¸ý","ÐÁ","ÈÉ","¹ï");
-gan['¼×']=0;gan['ÒÒ']=1;gan['±û']=2;gan['¶¡']=3;gan['Îì']=4;
-gan['¼º']=5;gan['¸ý']=6;gan['ÐÁ']=7;gan['ÈÉ']=8;gan['¹ï']=9;
+    var gan = Array("ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½");
+    gan['ï¿½ï¿½'] = 0;
+    gan['ï¿½ï¿½'] = 1;
+    gan['ï¿½ï¿½'] = 2;
+    gan['ï¿½ï¿½'] = 3;
+    gan['ï¿½ï¿½'] = 4;
+    gan['ï¿½ï¿½'] = 5;
+    gan['ï¿½ï¿½'] = 6;
+    gan['ï¿½ï¿½'] = 7;
+    gan['ï¿½ï¿½'] = 8;
+    gan['ï¿½ï¿½'] = 9;
 
-function getsjb(lun,nd,ra,ye){//È¡Êý¾Ý±í
- var i,j,k,p,v,v2,rn,Y;
- nd=nd.split(" "); for(i=0;i<4;i++) nd[i]-=0;
+    function getsjb(lun, nd, ra, ye) {//È¡ï¿½ï¿½Ý±ï¿½
+        var i, j, k, p, v, v2, rn, Y;
+        nd = nd.split(" ");
+        for (i = 0; i < 4; i++) nd[i] -= 0;
 
- //ÌáÈ¡Ë·ÈÕºÍ½ÚÆø
- JD.h=12;JD.m=JD.s=0;
- ra.length=ye.length=0;
- var n1=-1,n2=-1;
- var qa=new Array();
- for(i=0;i<lun.length;i++){
-   v=lun[i];  if(!v) continue;
-   if(v.substr(0,1)=="-") {
-     Y=v-0, rn=1;
-     continue;
-   }
-   if(Y==nd[0] && rn==nd[1]) n1=qa.length;
-   if(Y==nd[2] && rn==nd[3]) n2=qa.length;
-   JD.Y = Y;
-   JD.M = v.substr(0,2)-0;
-   JD.D = v.substr(2,2)-0;
-   if(rn<6&&JD.M>8) JD.Y--;
-   if(rn>8&&JD.M<5) JD.Y++;
+        //ï¿½ï¿½È¡Ë·ï¿½ÕºÍ½ï¿½ï¿½ï¿½
+        JD.h = 12;
+        JD.m = JD.s = 0;
+        ra.length = ye.length = 0;
+        var n1 = -1, n2 = -1;
+        var qa = new Array();
+        for (i = 0; i < lun.length; i++) {
+            v = lun[i];
+            if (!v) continue;
+            if (v.substr(0, 1) == "-") {
+                Y = v - 0, rn = 1;
+                continue;
+            }
+            if (Y == nd[0] && rn == nd[1]) n1 = qa.length;
+            if (Y == nd[2] && rn == nd[3]) n2 = qa.length;
+            JD.Y = Y;
+            JD.M = v.substr(0, 2) - 0;
+            JD.D = v.substr(2, 2) - 0;
+            if (rn < 6 && JD.M > 8) JD.Y--;
+            if (rn > 8 && JD.M < 5) JD.Y++;
 
-   qa[qa.length]=JD.toJD(); //³õÒ»
+            qa[qa.length] = JD.toJD(); //ï¿½ï¿½Ò»
 
-   if(rn==1) ye[ye.length]=qa.length-1; //ÄêÊ×µÄÔÂ»ýÊý
-   rn++;
- }
- if(n1==-1||n2==-1) return 'err';
+            if (rn == 1) ye[ye.length] = qa.length - 1; //ï¿½ï¿½ï¿½×µï¿½ï¿½Â»ï¿½ï¿½ï¿½
+            rn++;
+        }
+        if (n1 == -1 || n2 == -1) return 'err';
 
 
- //È¡Ë·
- for(i=n1;i<=n2;i++) ra[ra.length]=qa[i];
+        //È¡Ë·
+        for (i = n1; i <= n2; i++) ra[ra.length] = qa[i];
 
- ra.jd=ra[0]-0.5;
- for(i=1;i<ra.length;i++) ra[i]-=ra[0];
- ra[0]=0;
+        ra.jd = ra[0] - 0.5;
+        for (i = 1; i < ra.length; i++) ra[i] -= ra[0];
+        ra[0] = 0;
 
-}
-function nihe(r,k){//ÄâºÏ¼ÆËã
- var b=0;
- //var k=365.2422/8; if(r[1]-r[0]<33) k=29.5306; //Ð±ÂÊ
- var i,j,kk,v;
+    }
+    function nihe(r, k) {//ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½
+        var b = 0;
+        //var k=365.2422/8; if(r[1]-r[0]<33) k=29.5306; //Ð±ï¿½ï¿½
+        var i, j, kk, v;
 
- var k1=k-1,k2=k+1;
- for(kk=0;kk<12;kk++){ //²éÕÒ´ÎÊý
-  var bm=-1000,bM=1000,bmi=-1;
-  for(i=0;i<r.length;i++){
-   v=r[i]-(k*i+b); //Ö±ÏßÖÁÉÙÒªÉÏÒÆµÄÁ¿
-   if(v>bm) bm=v,bmi=i;
-   if(v<bM) bM=v;
-  }
-  var h=(bM+1-bm)/2;
-  if(h>-1e-7){ b+=bm+h; r.gk = k; r.gb = b; r.gh = h; return "ok"; }
-  for(i=0;i<r.length;i++){
-   if(i==bmi) continue;
-   v=( r[i]+1 - r[bmi] ) / (i-bmi);
-   if(i<bmi && v>k1) k1=v;
-   if(i>bmi && v<k2) k2=v;
-   if(k1>k2) return "ÎÞ½â";
-  }
-  k=(k1+k2)/2;
-  b=r[bmi]-k*bmi;
- }
- return "²éÕÒ"+kk+"´ÎÎ´ÕÒµ½½â";
-}
+        var k1 = k - 1, k2 = k + 1;
+        for (kk = 0; kk < 12; kk++) { //ï¿½ï¿½ï¿½Ò´ï¿½ï¿½ï¿½
+            var bm = -1000, bM = 1000, bmi = -1;
+            for (i = 0; i < r.length; i++) {
+                v = r[i] - (k * i + b); //Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½
+                if (v > bm) bm = v, bmi = i;
+                if (v < bM) bM = v;
+            }
+            var h = (bM + 1 - bm) / 2;
+            if (h > -1e-7) {
+                b += bm + h;
+                r.gk = k;
+                r.gb = b;
+                r.gh = h;
+                return "ok";
+            }
+            for (i = 0; i < r.length; i++) {
+                if (i == bmi) continue;
+                v = ( r[i] + 1 - r[bmi] ) / (i - bmi);
+                if (i < bmi && v > k1) k1 = v;
+                if (i > bmi && v < k2) k2 = v;
+                if (k1 > k2) return "ï¿½Þ½ï¿½";
+            }
+            k = (k1 + k2) / 2;
+            b = r[bmi] - k * bmi;
+        }
+        return "ï¿½ï¿½ï¿½ï¿½" + kk + "ï¿½ï¿½Î´ï¿½Òµï¿½ï¿½ï¿½";
+    }
 
-function chec(){
- var i, nd=tin.innerText, ta=nlb.innerText, s='',c2;
- var ra=new Array(), ye=new Array();
- nd=nd.split('\r\n');
- ta=ta.split('\r\n');
- for(i=0;i<nd.length;i++){
-   if(!nd[i]) continue;
-   if(getsjb(ta,nd[i],ra,ye)=='err') alert("±íÌáÈ¡´íÎó");
+    function chec() {
+        var i, nd = tin.innerText, ta = nlb.innerText, s = '', c2;
+        var ra = new Array(), ye = new Array();
+        nd = nd.split('\r\n');
+        ta = ta.split('\r\n');
+        for (i = 0; i < nd.length; i++) {
+            if (!nd[i]) continue;
+            if (getsjb(ta, nd[i], ra, ye) == 'err') alert("ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½");
 
-   c2=nihe(ra,29+499/940);
-   if(c2=='ok') s += (ra.gb+ra.jd).toFixed(6)+' ' + ra.gk.toFixed(8) + ' h=' + ra.gh.toFixed(8) +'\r\n';
-   else s += c2+'\r\n';
- }
+            c2 = nihe(ra, 29 + 499 / 940);
+            if (c2 == 'ok') s += (ra.gb + ra.jd).toFixed(6) + ' ' + ra.gk.toFixed(8) + ' h=' + ra.gh.toFixed(8) + '\r\n';
+            else s += c2 + '\r\n';
+        }
 
- //Äê»ýÊý´¦Àí
- c2=nihe(ye,12.37);
- if(c2=='ok'){
-  s+='ÄêÊ×»ýÔÂ b='+ye.gb.toFixed(6)+' k='+ye.gk.toFixed(8)+' h='+ye.gh.toFixed(6);
- } else s+='ÄêÊ×ÔÂ»ýÎÞ½â';
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        c2 = nihe(ye, 12.37);
+        if (c2 == 'ok') {
+            s += 'ï¿½ï¿½ï¿½×»ï¿½ï¿½ï¿½ b=' + ye.gb.toFixed(6) + ' k=' + ye.gk.toFixed(8) + ' h=' + ye.gh.toFixed(6);
+        } else s += 'ï¿½ï¿½ï¿½ï¿½ï¿½Â»ï¿½ï¿½Þ½ï¿½';
 
 //alert(ra);
 
- out.innerText = 'ÊÊÓÃÓÚ-479Äê-221Äê\r\nÆ½Ë·\r\n'+s;
- JD.setFromJD(ra.jd+0.5+ra[ra.length-1])
+        out.innerText = 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-479ï¿½ï¿½-221ï¿½ï¿½\r\nÆ½Ë·\r\n' + s;
+        JD.setFromJD(ra.jd + 0.5 + ra[ra.length - 1])
 // alert( JD.toStr() );
-}
+    }
 
 
-
-
-/**
-´íÎó 
-´øa±íÊ¾¸ÄºóÓë·½Ê«ÃúµÄÏàÍ¬
--328Äê2.20 ¸Ä2.19
--257Äê5.13 ¸Ä5.14 a
--249Äê7.14 ¸Ä7.13 a
-**/
+    /**
+     ï¿½ï¿½ï¿½ï¿½
+     ï¿½ï¿½aï¿½ï¿½Ê¾ï¿½Äºï¿½ï¿½ë·½Ê«ï¿½ï¿½ï¿½ï¿½ï¿½Í¬
+     -328ï¿½ï¿½2.20 ï¿½ï¿½2.19
+     -257ï¿½ï¿½5.13 ï¿½ï¿½5.14 a
+     -249ï¿½ï¿½7.14 ï¿½ï¿½7.13 a
+     **/
 </script>
-<a href=index.htm>·µ»Ø</a>
-<input type=button value='È·¶¨' onclick="chec()"><br>
+<a href=index.htm>ï¿½ï¿½ï¿½ï¿½</a>
+<input type=button value='È·ï¿½ï¿½' onclick="chec()"><br>
 <textarea id=tin cols=80 rows=20>
 -479 1 -220 13
 </textarea><br>

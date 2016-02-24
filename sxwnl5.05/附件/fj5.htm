@@ -1,18 +1,18 @@
-<script language=javascript src=../Ô´³ÌÐò/eph0.js></script>
-<script language=javascript src=../Ô´³ÌÐò/ephB.js></script>
-ºãÐÇ¹éËãÆ÷(¹éËãµ½J2000.0Æ½Î»ÖÃ)
-Ã÷Âë/´úÂë<input type=checkBox id=Ca checked>
-<input type=button onclick="javascript:fx()" value="È·¶¨">
-ºö¶ÌÕÂ<input type=checkBox id=Cb checked>
-È«²âÊÔ<input type=checkBox id=Cc checked>
-<input type=button onclick="javascript:te()" value="²âÊÔ">
+<script language=javascript src=../Ô´ï¿½ï¿½ï¿½ï¿½/eph0.js></script>
+<script language=javascript src=../Ô´ï¿½ï¿½ï¿½ï¿½/ephB.js></script>
+ï¿½ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ãµ½J2000.0Æ½Î»ï¿½ï¿½)
+ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½<input type=checkBox id=Ca checked>
+<input type=button onclick="javascript:fx()" value="È·ï¿½ï¿½">
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<input type=checkBox id=Cb checked>
+È«ï¿½ï¿½ï¿½ï¿½<input type=checkBox id=Cc checked>
+<input type=button onclick="javascript:te()" value="ï¿½ï¿½ï¿½ï¿½">
 <br>
 <textarea cols=100 rows=15 id=B1>
-¿â1
-J2008.5,* 0 48 49.767, +5 19 27.03, 0.0507, -1.141, 0.134, 5.74 ,ÐÇ1019 ,G.Psc 96 K2
-J2008.5,* 0 26 42.175,-42 15 35.34, 0.0210, -0.354, 0.042, 2.40 ,ÐÇ12   ,Phe ¦Á   K0
-J2008.5,= 2 36 25.185, -7 47 41.99,-0.0022, -0.060, 0.006, 5.53 ,ÐÇ1074 ,Cet 80   M0
-J2008.5,= 2 36 19.295,  5 37 47.81,-0.0019, -0.024, 0.009, 4.87 ,ÐÇ1072 ,Cet ¦Ô   G8
+ï¿½ï¿½1
+J2008.5,* 0 48 49.767, +5 19 27.03, 0.0507, -1.141, 0.134, 5.74 ,ï¿½ï¿½1019 ,G.Psc 96 K2
+J2008.5,* 0 26 42.175,-42 15 35.34, 0.0210, -0.354, 0.042, 2.40 ,ï¿½ï¿½12   ,Phe ï¿½ï¿½   K0
+J2008.5,= 2 36 25.185, -7 47 41.99,-0.0022, -0.060, 0.006, 5.53 ,ï¿½ï¿½1074 ,Cet 80   M0
+J2008.5,= 2 36 19.295,  5 37 47.81,-0.0019, -0.024, 0.009, 4.87 ,ï¿½ï¿½1072 ,Cet ï¿½ï¿½   G8
 
 </textarea><br>
 
@@ -22,73 +22,73 @@ J2008.5,= 2 36 19.295,  5 37 47.81,-0.0019, -0.024, 0.009, 4.87 ,ÐÇ1072 ,Cet ¦Ô 
 <script language=javascript>
 
 
-function kg(s){ //È¥³ýÒ»Ð©¿Õ¸ñ
-  var c='';
-  if(s.substr(4,1)=='¡ã') c = s.substr(0,1)
-  s = c + s.substr(2,s.length-2);
-  s = s.replace(/m|(¡ã)|\'/g,' ');
-  s = s.replace(/h|s|\"/g,'');
-  return s;
-}
+    function kg(s) { //È¥ï¿½ï¿½Ò»Ð©ï¿½Õ¸ï¿½
+        var c = '';
+        if (s.substr(4, 1) == 'ï¿½ï¿½') c = s.substr(0, 1)
+        s = c + s.substr(2, s.length - 2);
+        s = s.replace(/m|(ï¿½ï¿½)|\'/g, ' ');
+        s = s.replace(/h|s|\"/g, '');
+        return s;
+    }
 
 
-function fx(){ //·´Ïò¹éËã
- var s = B1.innerText;
- var i,t, c, r='';
- var f=new Array(), b=new Array();
+    function fx() { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        var s = B1.innerText;
+        var i, t, c, r = '';
+        var f = new Array(), b = new Array();
 
- var sn = s.indexOf('\r\n');
- var km = s.substr(0,sn); //¿âÃû³Æ
- s = s.substr(sn+2, s.length - sn-2);//È¥³ýµÚ1ÐÐ
- s = s.replace(/(\r\n)+/g, ',');       //°Ñ»»ÐÐ·û¿´×÷¶ººÅ
- //s = s.replace(/, +/g,',');          //È¥³ý¶ººÅºóµÄ¿Õ¸ñ
- s = s.split(',');
- for(i=0,k=0;i<s.length;i+=9){
-  if(!s[i] || s[i].length<5) continue;
-  //ÌáÈ¡ÀúÔª
-  t = (s[i].substr(1,4)-2000)*365.25;  //µ±ÄêÈåÂÔÄêÊ×
-  c = s[i].substr(5,2);
-  if(c=='.0') ;
-  if(c=='.5') t += 365.25/2;
-  t /= 36525;
+        var sn = s.indexOf('\r\n');
+        var km = s.substr(0, sn); //ï¿½ï¿½ï¿½ï¿½ï¿½
+        s = s.substr(sn + 2, s.length - sn - 2);//È¥ï¿½ï¿½ï¿½1ï¿½ï¿½
+        s = s.replace(/(\r\n)+/g, ',');       //ï¿½Ñ»ï¿½ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //s = s.replace(/, +/g,',');          //È¥ï¿½ï¿½Åºï¿½Ä¿Õ¸ï¿½
+        s = s.split(',');
+        for (i = 0, k = 0; i < s.length; i += 9) {
+            if (!s[i] || s[i].length < 5) continue;
+            //ï¿½ï¿½È¡ï¿½ï¿½Ôª
+            t = (s[i].substr(1, 4) - 2000) * 365.25;  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            c = s[i].substr(5, 2);
+            if (c == '.0') ;
+            if (c == '.5') t += 365.25 / 2;
+            t /= 36525;
 
-  c = s[i+1];
-  c = c.replace(/(^\s*)|(\s*$)/g, ''); //È¥³ýÇ°ºó¿Õ¸ñ
-  b[0] = str2rad( c.substr(1,c.length), 1 );
-  b[1] = str2rad( s[i+2], 0 );
-  b[2] = 1;
-
-
-  b = CDllr_D2J(t,b,'P03'); //ÏÈÐý×ª£¬ÔÙ¸Ä×ÔÐÐ£¬È·±£2008ÄêÕýÈ·(ÆäÊµ´ÎÐòÏÈºó¶ÔµÍ¶ÈÎ³¶ÈÓ°Ïì·Ç³£Ð¡)£¬³£¹æÊÇÏÈËã×ÔÐÐºóÐý×ª
-  b[0] -= s[i+3]*t*100/rad*15;
-  b[1] -= s[i+4]*t*100/rad;
+            c = s[i + 1];
+            c = c.replace(/(^\s*)|(\s*$)/g, ''); //È¥ï¿½ï¿½Ç°ï¿½ï¿½Õ¸ï¿½
+            b[0] = str2rad(c.substr(1, c.length), 1);
+            b[1] = str2rad(s[i + 2], 0);
+            b[2] = 1;
 
 
-  r += c.substr(0,1);
-  r += kg( rad2strE(b[0],1,3) )+',';
-  r += kg( rad2strE(b[1],0,2) )+',';
-  r += s[i+3]+',' + s[i+4]+',' + s[i+5] +',';
-  r += s[i+6] +','+ s[i+7]+',' + s[i+8]+'#';
- }
- r = km+'#'+r;
- if(Ca.checked) r=r.replace(/\#/g, '\r\n');
- else r="'"+r+"'";
- B2.innerText = r;
-}
-function te(){
- var u=B2.innerText;
- if(u.substr(0,1)=="'"){
-   alert('´úÂëÐÎÊ½µÄÐÇ¿â²»ÄÜÖ±½Ó²âÊÔ');
-   return;
- }
- var i,s = '', u = getHXK(u,Cc.checked);
- var Q = Cb.checked ? 35 : 0;
- var jd = 2925.5-10;
- for(i=0; i<10; i++, jd+=10)
-   s += hxCalc(jd/36525,u,Q, 0,0,0);
- B3.innerText = s;
+            b = CDllr_D2J(t, b, 'P03'); //ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½Ð£ï¿½È·ï¿½ï¿½2008ï¿½ï¿½ï¿½ï¿½È·(ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½Èºï¿½ÔµÍ¶ï¿½Î³ï¿½ï¿½Ó°ï¿½ï¿½Ç³ï¿½Ð¡)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½ï¿½×ª
+            b[0] -= s[i + 3] * t * 100 / rad * 15;
+            b[1] -= s[i + 4] * t * 100 / rad;
 
-}
+
+            r += c.substr(0, 1);
+            r += kg(rad2strE(b[0], 1, 3)) + ',';
+            r += kg(rad2strE(b[1], 0, 2)) + ',';
+            r += s[i + 3] + ',' + s[i + 4] + ',' + s[i + 5] + ',';
+            r += s[i + 6] + ',' + s[i + 7] + ',' + s[i + 8] + '#';
+        }
+        r = km + '#' + r;
+        if (Ca.checked) r = r.replace(/\#/g, '\r\n');
+        else r = "'" + r + "'";
+        B2.innerText = r;
+    }
+    function te() {
+        var u = B2.innerText;
+        if (u.substr(0, 1) == "'") {
+            alert('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½Ç¿â²»ï¿½ï¿½Ö±ï¿½Ó²ï¿½ï¿½ï¿½');
+            return;
+        }
+        var i, s = '', u = getHXK(u, Cc.checked);
+        var Q = Cb.checked ? 35 : 0;
+        var jd = 2925.5 - 10;
+        for (i = 0; i < 10; i++, jd += 10)
+            s += hxCalc(jd / 36525, u, Q, 0, 0, 0);
+        B3.innerText = s;
+
+    }
 
 
 </script>

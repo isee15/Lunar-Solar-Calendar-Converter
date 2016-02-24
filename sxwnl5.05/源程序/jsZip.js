@@ -1,201 +1,225 @@
-/*cscript.exeÖ´ÐÐ*/
+/*cscript.exeÖ´ï¿½ï¿½*/
 /***********
-ÎÄ¼þ²Ù×÷º¯Êý
-***********/
-fso=new ActiveXObject("Scripting.FileSystemObject");
-function wfile(fname,s){ //Ð´ÎÄ¼þ
-  var fp=fso.CreateTextFile(fname,true,false);
-  fp.Write(s);
-  fp.close();
+ ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ ***********/
+fso = new ActiveXObject("Scripting.FileSystemObject");
+function wfile(fname, s) { //Ð´ï¿½Ä¼ï¿½
+    var fp = fso.CreateTextFile(fname, true, false);
+    fp.Write(s);
+    fp.close();
 }
-function rfile(fname){ //¶ÁÎÄ¼þ
-  var fp=fso.OpenTextFile(fname,1,false);
-  var s=fp.ReadAll();
-  fp.Close();
-  return s;
+function rfile(fname) { //ï¿½ï¿½ï¿½Ä¼ï¿½
+    var fp = fso.OpenTextFile(fname, 1, false);
+    var s = fp.ReadAll();
+    fp.Close();
+    return s;
 }
-function afile(fname,s){ //×·¼ÓÐ´Èë
-  if(!fso.FileExists(fname)) { wfile(fname,s); return; }
-  var fp=fso.OpenTextFile(fname,8,false);
-  fp.Write(s);
-  fp.close();
+function afile(fname, s) { //×·ï¿½ï¿½Ð´ï¿½ï¿½
+    if (!fso.FileExists(fname)) {
+        wfile(fname, s);
+        return;
+    }
+    var fp = fso.OpenTextFile(fname, 8, false);
+    fp.Write(s);
+    fp.close();
 }
-function fdelete(fname){ fso.DeleteFile(fname); }
-function fexists(fname){ return fso.FileExists(fname); }
-function dexists(dir)  { return fso.FolderExists(dir); }
-function getfiles(path,lx){ //È¡Ö¸¶¨Â·¾¶ÄÚµÄÎÄ¼þ±í,lxÎªfolderÊ±È¡×ÓÄ¿Â¼±í
-  var f=fso.GetFolder(path),fc;
-  if(lx=="folder") fc=new Enumerator(f.SubFolders);
-  else fc=new Enumerator(f.files);
-  var s=new Array();
-  for(; !fc.atEnd(); fc.moveNext())
-    s[s.length]=fc.item();
-  return s;
+function fdelete(fname) {
+    fso.DeleteFile(fname);
 }
-
-
-/***********
-javascriptÔ´³ÌÐòÑ¹Ëõ£¬¿ÉÖ±½ÓÊ¹ÓÃº¯ÊýÎªjsCompress()
-***********/
-var deleSpaceN=10000000; //delSpace()ÓÐÐ§Ö´ÐÐ´ÎÊý(ÓÃÓÚµ÷ÊÔÑ¹ËõºóµÄ³ÌÐò)
-function deleSpace(s){//È¥³ý¿Õ°×·û
- if(deleSpaceN<=0) return s;
- deleSpaceN--;
- //Ä³Ð©¹Ø¼ü×ÖºóÃæµÄ¿Õ¸ñÓ¦±£ÁôÒ»¸ö
- s=s.replace(/function[ \t]+/g,'function__KG__');
- s=s.replace(/new[ \t]+/g,     'new__KG__'     );
- s=s.replace(/var[ \t]+/g,     'var__KG__'     );
- s=s.replace(/else[ \t]+/g,    'else__KG__'    );
- s=s.replace(/return[ \t]+/g,  'return__KG__'  );
- s=s.replace(/[ \t]+in[ \t]+/g,  '__KG__in__KG__'  );
- s=s.replace(/[ \t\r\n]/g,'');
- //s=s.replace(/[ \t]/g,'');
- //s=s.replace(/[\r\n]+/g,'\r\n');
-
- s=s.replace(/__KG__/g,' ');
- return s;
+function fexists(fname) {
+    return fso.FileExists(fname);
 }
-function deleZS(s){ //¿ìËÙÈ¥³ý¶ÎÂä×¢ÊÍ
- var p1=0,p2,out='';
- while(1){
-   p2=s.indexOf('/*',p1);  //È¡´®µÄÄ©µã
-   if(p2<0) p2=s.length;   //ÕÒ²»µ½Ôò¶¨Î»µ½´®Î²
-   out+=s.substr(p1,p2-p1);
-   p1=s.indexOf('*/',p2)+2; //È¡´®µÄÆðµã
-   if(p1<2) return out;
- }
+function dexists(dir) {
+    return fso.FolderExists(dir);
 }
-function jsCompress(s){
- s=s.replace(/http:\/\//g,'_TSurl'); //url
- s=s.replace(/\/\/[^\r\n]*/g,''); //È¥³ýÐÐ×¢ÊÍ
- s=deleZS(s); //È¥³ý¶ÎÂä×¢ÊÍ
- s=s.replace(/\\\'/g,'_TSdy'); //´®ÄÚµÄµ¥ÒýºÅ
- s=s.replace(/\\\"/g,'_TSsy'); //´®ÄÚµÄË«ÒýºÅ
-
- var i,c, out='', p1=0, cf='';
- for(i=0;i<s.length;i++){
-  c=s.substr(i,1);
-
-  if(c=='.' && !cf && s.substr(i,10)=='.replace(/'){ //ÒýºÅ³£Á¿Ö®Íâ(¼´´úÂëÖ®ÖÐ)µÄreplaceº¯Êý²»Ñ¹Ëõ
-   out += deleSpace(s.substr(p1,i-p1));
-   p1 = i;
-
-   i = s.indexOf('/g,',p1+11);
-   if(i == -1) { i = p1; continue; }
-
-   out += s.substr(p1,i+1-p1);
-   p1 = i+1;
-   continue;
-  }
-
-  if( c!="'" && c!='"' ) continue;
-  if(!cf){
-   out += deleSpace(s.substr(p1,i-p1));
-   p1=i;
-   cf=c;
-   continue;
-  }
-  if(c==cf){
-   out+=s.substr(p1,i+1-p1);
-   p1=i+1;
-   cf='';
-  }
- }
- out += deleSpace(s.substr(p1,i-p1));
- out=out.replace(/_TSdy/g,"\\\'");
- out=out.replace(/_TSsy/g,'\\\"');
- out=out.replace(/_TSurl/g,'http://');
- return out;
+function getfiles(path, lx) { //È¡Ö¸ï¿½ï¿½Â·ï¿½ï¿½ï¿½Úµï¿½ï¿½Ä¼ï¿½ï¿½ï¿½,lxÎªfolderÊ±È¡ï¿½ï¿½Ä¿Â¼ï¿½ï¿½
+    var f = fso.GetFolder(path), fc;
+    if (lx == "folder") fc = new Enumerator(f.SubFolders);
+    else fc = new Enumerator(f.files);
+    var s = new Array();
+    for (; !fc.atEnd(); fc.moveNext())
+        s[s.length] = fc.item();
+    return s;
 }
 
 
 /***********
-WScript²Ù×÷
-***********/
+ javascriptÔ´ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½Ê¹ï¿½Ãºï¿½ï¿½ï¿½ÎªjsCompress()
+ ***********/
+var deleSpaceN = 10000000; //delSpace()ï¿½ï¿½Ð§Ö´ï¿½Ð´ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½)
+function deleSpace(s) {//È¥ï¿½ï¿½Õ°×·ï¿½
+    if (deleSpaceN <= 0) return s;
+    deleSpaceN--;
+    //Ä³Ð©ï¿½Ø¼ï¿½ï¿½Öºï¿½ï¿½ï¿½Ä¿Õ¸ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
+    s = s.replace(/function[ \t]+/g, 'function__KG__');
+    s = s.replace(/new[ \t]+/g, 'new__KG__');
+    s = s.replace(/var[ \t]+/g, 'var__KG__');
+    s = s.replace(/else[ \t]+/g, 'else__KG__');
+    s = s.replace(/return[ \t]+/g, 'return__KG__');
+    s = s.replace(/[ \t]+in[ \t]+/g, '__KG__in__KG__');
+    s = s.replace(/[ \t\r\n]/g, '');
+    //s=s.replace(/[ \t]/g,'');
+    //s=s.replace(/[\r\n]+/g,'\r\n');
 
-function getLine(){
- //WScript.StdIn.Skip(1);
- var a='';
- while(!WScript.StdIn.AtEndOfLine) a+=WScript.StdIn.Read(1); //»º´æÖÐ¶ÁÈëÒ»ÐÐ,read()»á¶Á»»ÐÐ·û,ËùÒÔÓöÖÁ»»ÐÐ·û¾Í²»ÔÙÑ­»·
- WScript.StdIn.Read(2);
- return a;
+    s = s.replace(/__KG__/g, ' ');
+    return s;
+}
+function deleZS(s) { //ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½
+    var p1 = 0, p2, out = '';
+    while (1) {
+        p2 = s.indexOf('/*', p1);  //È¡ï¿½ï¿½ï¿½ï¿½Ä©ï¿½ï¿½
+        if (p2 < 0) p2 = s.length;   //ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½Î²
+        out += s.substr(p1, p2 - p1);
+        p1 = s.indexOf('*/', p2) + 2; //È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (p1 < 2) return out;
+    }
+}
+function jsCompress(s) {
+    s = s.replace(/http:\/\//g, '_TSurl'); //url
+    s = s.replace(/\/\/[^\r\n]*/g, ''); //È¥ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½
+    s = deleZS(s); //È¥ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½
+    s = s.replace(/\\\'/g, '_TSdy'); //ï¿½ï¿½ï¿½ÚµÄµï¿½ï¿½ï¿½ï¿½
+    s = s.replace(/\\\"/g, '_TSsy'); //ï¿½ï¿½ï¿½Úµï¿½Ë«ï¿½ï¿½ï¿½
+
+    var i, c, out = '', p1 = 0, cf = '';
+    for (i = 0; i < s.length; i++) {
+        c = s.substr(i, 1);
+
+        if (c == '.' && !cf && s.substr(i, 10) == '.replace(/') { //ï¿½ï¿½Å³ï¿½ï¿½ï¿½Ö®ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½)ï¿½ï¿½replaceï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½
+            out += deleSpace(s.substr(p1, i - p1));
+            p1 = i;
+
+            i = s.indexOf('/g,', p1 + 11);
+            if (i == -1) {
+                i = p1;
+                continue;
+            }
+
+            out += s.substr(p1, i + 1 - p1);
+            p1 = i + 1;
+            continue;
+        }
+
+        if (c != "'" && c != '"') continue;
+        if (!cf) {
+            out += deleSpace(s.substr(p1, i - p1));
+            p1 = i;
+            cf = c;
+            continue;
+        }
+        if (c == cf) {
+            out += s.substr(p1, i + 1 - p1);
+            p1 = i + 1;
+            cf = '';
+        }
+    }
+    out += deleSpace(s.substr(p1, i - p1));
+    out = out.replace(/_TSdy/g, "\\\'");
+    out = out.replace(/_TSsy/g, '\\\"');
+    out = out.replace(/_TSurl/g, 'http://');
+    return out;
 }
 
 
 /***********
-³ÌÐò¿ªÊ¼
-***********/
-var about='\
+ WScriptï¿½ï¿½ï¿½ï¿½
+ ***********/
+
+function getLine() {
+    //WScript.StdIn.Skip(1);
+    var a = '';
+    while (!WScript.StdIn.AtEndOfLine) a += WScript.StdIn.Read(1); //ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½Ò»ï¿½ï¿½,read()ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½Í²ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½
+    WScript.StdIn.Read(2);
+    return a;
+}
+
+
+/***********
+ ï¿½ï¿½ï¿½ï¿½Ê¼
+ ***********/
+var about = '\
 ============================================\n\
-      »¶Ó­Ê¹ÓÃ¡¶ÊÙÐÇJSscriptÑ¹ËõÆ÷¡·¡£      \n\
-      ¹¦ÄÜ£º½«¶à¸öjs½Å±¾ºÏ²¢Ñ¹Ëõµ½HTMLÖÐ    \n\
-      Éè¼Æ£ºÐí½£Î° 2008Äê12ÔÂ9ÈÕ            \n\
+      ï¿½ï¿½Ó­Ê¹ï¿½Ã¡ï¿½ï¿½ï¿½ï¿½ï¿½JSscriptÑ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½      \n\
+      ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½jsï¿½Å±ï¿½ï¿½Ï²ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½HTMLï¿½ï¿½    \n\
+      ï¿½ï¿½Æ£ï¿½ï¿½?Î° 2008ï¿½ï¿½12ï¿½ï¿½9ï¿½ï¿½            \n\
 ============================================\n\
-1¡¢jsZip³ÌÐòÐè4¸öÈë¿Ú²ÎÊý:\n\
-2¡¢Óï·¨£º\n   cscript jsZip.js Ä¿±ê.htm ËõÖ÷.htm Ô´1.js+Ô´2.js+..+Ô´n.js Ñ¹Ëõ¶ÎÂäÊý\n\
-3¡¢·¶Àý£º\n   cscript jsZip.js index.htm wnl.htm a1.js+a2.js+a3.js 1000000 \n\
-4¡¢×¢Òâ£ºËùÓÐÎÄ¼þÂ·¾¶±í´ïÊÇÏà¶Ô"½Å±¾.js"¶øÑÔµÄ¡£\n\
-5¡¢jsZipÔÚÊÙÐÇÍòÄêÀúÖÐµ÷ÊÔÍ¨¹ý¡£\n\
-6¡¢ËõÖ÷htm ÄÚ×îºÃÓÐ<!--js1S-->ºÍ<!--js1E-->ÕâÁ½¸ö±êÇ©£¬Ñ¹ËõºóµÄJS½Å±¾½«Ìæ»»ÕâÁ½¸ö±êÇ©Ö®¼äµÄÄÚÈÝ¡£\n\
-7¡¢±¾Ñ¹ËõÆ÷ÊÊÓÃÓÚJavaScript \n\n\
-8¡¢Ñ¹Ëõ¶ÎÂäÊýÓÃÓÚµ÷ÊÔ¡£ÔÚÈ¥³ý»»ÐÐ·ûÊ±¿ÉÄÜÒòÔ´³ÌÐò²»¹æ·¶(ÈçÓï¾ä½áÊøÊ±Ã»ÓÐ¼Ó";")¶øÔì³ÉÑ¹ËõºóµÄ³ÌÐò²»¿ÉÓÃ¡£·Ö¶Îµ÷ÊÔÓÐÖúÓÚ¿ìËÙÕÒ³öÔ­Òò¡£\n\
-9¡¢ËùÎ½¶ÎÂäÊýÖ¸£ºÒÔ³ÌÐòÖÐµÄ¾²Ì¬×Ö´®×÷Îª¶ÎÂäµÄ·Ö½ç£¬¼´¾²Ì¬´®¿´×÷Ò»¸öÕûÌå×÷Îª·Ö½ç·û¡£³ÌÐò²»¶Ô¾²Ì¬´®×÷ÈÎºÎÑ¹Ëõ´¦Àí¡£\n\
+1ï¿½ï¿½jsZipï¿½ï¿½ï¿½ï¿½ï¿½ï¿½4ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½:\n\
+2ï¿½ï¿½ï¿½ï·¨ï¿½ï¿½\n   cscript jsZip.js Ä¿ï¿½ï¿½.htm ï¿½ï¿½ï¿½ï¿½.htm Ô´1.js+Ô´2.js+..+Ô´n.js Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n\
+3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n   cscript jsZip.js index.htm wnl.htm a1.js+a2.js+a3.js 1000000 \n\
+4ï¿½ï¿½×¢ï¿½â£ºï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½Å±ï¿½.js"ï¿½ï¿½ï¿½ÔµÄ¡ï¿½\n\
+5ï¿½ï¿½jsZipï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½Í¨ï¿½ï¿½\n\
+6ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½htm ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<!--js1S-->ï¿½ï¿½<!--js1E-->ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç©ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½JSï¿½Å±ï¿½ï¿½ï¿½ï¿½æ»»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç©Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¡ï¿½\n\
+7ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½JavaScript \n\n\
+8ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½Ô¡ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½Ð·ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ò²»¹æ·¶(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Ã»ï¿½Ð¼ï¿½";")ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ò²»¿ï¿½ï¿½Ã¡ï¿½ï¿½Ö¶Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½Ò³ï¿½Ô­ï¿½ï¿½\n\
+9ï¿½ï¿½ï¿½ï¿½Î½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ô³ï¿½ï¿½ï¿½ï¿½ÐµÄ¾ï¿½Ì¬ï¿½Ö´ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ä·Ö½ç£¬ï¿½ï¿½ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Ö½ï¿½ï¿½ï¿½ï¿½ò²»¶Ô¾ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½?\n\
 ============================================\n\n\
 ';
 
-var i,ph,p1,p2,s='',s2='';
-ph=WScript.ScriptFullName;
-ph=ph.substr(0,ph.lastIndexOf("\\")+1); //µ±Ç°Â·¾¶
+var i, ph, p1, p2, s = '', s2 = '';
+ph = WScript.ScriptFullName;
+ph = ph.substr(0, ph.lastIndexOf("\\") + 1); //ï¿½ï¿½Ç°Â·ï¿½ï¿½
 
 WScript.Echo(about);
 
-var args=WScript.Arguments; //ÃüÁîÐÐ²ÎÊý
-if(args.length!=4){
-  getLine();
-  WScript.Quit();
+var args = WScript.Arguments; //ï¿½ï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½
+if (args.length != 4) {
+    getLine();
+    WScript.Quit();
 }
 
-deleSpaceN = args.item(3)-0; //ÉèÖÃÑ¹ËõµÄ¶ÎÂäÊý(Ò»¸ö×Ö´®¿´×÷¶ÎÂäµÄ·Ö½ç·û),µ÷ÊÔÓÃ
+deleSpaceN = args.item(3) - 0; //ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½(Ò»ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·Ö½ï¿½ï¿½),ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
-//ºÏ²¢jsÔ´ÎÄ¼þ
-var fs = args.item(2); //Ô´jsÎÄ¼þ
-fs=fs.split('+');
+//ï¿½Ï²ï¿½jsÔ´ï¿½Ä¼ï¿½
+var fs = args.item(2); //Ô´jsï¿½Ä¼ï¿½
+fs = fs.split('+');
 
-for(i=0; i<fs.length; i++){
- if(fs[i]=='')          { WScript.Echo('Ô´jsÎÄ¼þÃû³ÆÎÞÐ§');   getLine(); WScript.Quit(); }
- if(!fexists(ph+fs[i])) { WScript.Echo(fs[i]+' ÎÄ¼þ²»´æÔÚ!'); getLine(); WScript.Quit(); }
+for (i = 0; i < fs.length; i++) {
+    if (fs[i] == '') {
+        WScript.Echo('Ô´jsï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§');
+        getLine();
+        WScript.Quit();
+    }
+    if (!fexists(ph + fs[i])) {
+        WScript.Echo(fs[i] + ' ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!');
+        getLine();
+        WScript.Quit();
+    }
 }
 
-WScript.Echo('\r\nÕýÔÚ¶ÁÈ¡ÎÄ¼þ...');
-for(i=0,s=''; i<fs.length; i++) s += rfile(ph+fs[i]);
+WScript.Echo('\r\nï¿½ï¿½ï¿½Ú¶ï¿½È¡ï¿½Ä¼ï¿½...');
+for (i = 0, s = ''; i < fs.length; i++) s += rfile(ph + fs[i]);
 
-//Ñ¹ËõÎÄ¼þ
-WScript.Echo('ÕýÔÚÑ¹ËõÎÄ¼þ...');
-s=jsCompress(s);
-s='<script language="javascript">\r\n' + s + '\r\n</script>\r\n';
+//Ñ¹ï¿½ï¿½ï¿½Ä¼ï¿½
+WScript.Echo('ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½Ä¼ï¿½...');
+s = jsCompress(s);
+s = '<script language="javascript">\r\n' + s + '\r\n</script>\r\n';
 
-//½«js²åÈëhtmÖÐ
-fs=args.item(1);
-if( !fexists(ph+fs) ){ WScript.Echo(fs+' ËõÖ÷htm²»´æÔÚ'); getLine(); WScript.Quit(); }
-s2 = rfile(ph+fs);
-p1=s2.indexOf('<!--js1S-->');
-p2=s2.indexOf('<!--js1E-->')+11;
-if(p1>=0&&p2>=0)
- s2 = s2.substr(0,p1) + s + s2.substr(p2,s2.length-p2); ////Ð´Ä¿±êÎÄ¼þ(ºÏ²¢ÎÄ¼þ)
-else s2=s+s2;
+//ï¿½ï¿½jsï¿½ï¿½ï¿½ï¿½htmï¿½ï¿½
+fs = args.item(1);
+if (!fexists(ph + fs)) {
+    WScript.Echo(fs + ' ï¿½ï¿½ï¿½ï¿½htmï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    getLine();
+    WScript.Quit();
+}
+s2 = rfile(ph + fs);
+p1 = s2.indexOf('<!--js1S-->');
+p2 = s2.indexOf('<!--js1E-->') + 11;
+if (p1 >= 0 && p2 >= 0)
+    s2 = s2.substr(0, p1) + s + s2.substr(p2, s2.length - p2); ////Ð´Ä¿ï¿½ï¿½ï¿½Ä¼ï¿½(ï¿½Ï²ï¿½ï¿½Ä¼ï¿½)
+else s2 = s + s2;
 
-//±£´æµ½Ä¿±êÎÄ¼þÖÐ
-fs=args.item(0);
-if( fexists(ph+fs) ){
- WScript.Echo(fs+' Ä¿±êÎÄ¼þÒÑ´æÔÚ¡£¸²¸ÇÂð£¿(y/n)');
- if(getLine()!='y') WScript.Quit();
+//ï¿½ï¿½ï¿½æµ½Ä¿ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+fs = args.item(0);
+if (fexists(ph + fs)) {
+    WScript.Echo(fs + ' Ä¿ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ñ´ï¿½ï¿½Ú¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(y/n)');
+    if (getLine() != 'y') WScript.Quit();
 }
 
-s2='<!-- saved from url=(0021)http://www.sxwnl.com/ -->\r\n'+s2;
-s2=s2.replace(/readme\.htm/g,'javascript:showHelp(1);');
-s2=s2.replace(/exphelp1/g, rfile("exphelp1.htm").replace(/\r\n/g,'') );
-wfile(ph+fs,s2);
+s2 = '<!-- saved from url=(0021)http://www.sxwnl.com/ -->\r\n' + s2;
+s2 = s2.replace(/readme\.htm/g, 'javascript:showHelp(1);');
+s2 = s2.replace(/exphelp1/g, rfile("exphelp1.htm").replace(/\r\n/g, ''));
+wfile(ph + fs, s2);
 
-WScript.Echo('Ä¿±êÎÄ¼þ£º'+ph+fs+' ºÏ²¢Íê³É');
+WScript.Echo('Ä¿ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½' + ph + fs + ' ï¿½Ï²ï¿½ï¿½ï¿½ï¿½');
 getLine();

@@ -1,9 +1,9 @@
 <textarea cols=30 rows=15 id=B1>
-*ÐÇºÅÎª×¢ÊÍÐÐ£¬×¢ÊÍ²»ÄÜº¬Ó¢ÎÄ¶ººÅ
-*Ã¿×éµÚÒ»¸öµØ±êÇ°¼ÓmºÍ¿Õ¸ñ
-*Ã¿×éµÚ¶þ¸ö¼ÓÉÏlºÍ¿Õ¸ñ
-*Ã¿×é×îºóÒ»¸ö¼ÓÉÏrºÍ¿Õ¸ñ
-*Ð¡µºÒ»
+*ï¿½Çºï¿½Îª×¢ï¿½ï¿½ï¿½Ð£ï¿½×¢ï¿½Í²ï¿½ï¿½Üºï¿½Ó¢ï¿½Ä¶ï¿½ï¿½ï¿½
+*Ã¿ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ø±ï¿½Ç°ï¿½ï¿½mï¿½Í¿Õ¸ï¿½
+*Ã¿ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½Í¿Õ¸ï¿½
+*Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½rï¿½Í¿Õ¸ï¿½
+*Ð¡ï¿½ï¿½Ò»
 m 161.341,-79.951,
 l 161.681,-79.964,
 162.48,-79.924,
@@ -20,7 +20,7 @@ l 161.681,-79.964,
 160.8,-79.876,
 r 161.341,-79.951,
 
-*Ð¡µº¶þ
+*Ð¡ï¿½ï¿½ï¿½ï¿½
 m 126.185,-73.971,
 l 126.323,-73.977,
 127.101,-73.805,
@@ -36,7 +36,7 @@ l 126.323,-73.977,
 125.354,-73.873,
 r 126.185,-73.971,
 
-*Ð¡µºÈý
+*Ð¡ï¿½ï¿½ï¿½ï¿½
 m 109.001,-74.806,
 l 108.96,-74.749,
 109.69,-74.595,
@@ -52,7 +52,7 @@ l 108.96,-74.749,
 108.288,-74.545,
 r 109.001,-74.806,
 
-*Ð¡µºËÄ
+*Ð¡ï¿½ï¿½ï¿½ï¿½
 m 95.258,-72.142,
 l 95.321,-72.205,
 95.789,-72.265,
@@ -73,7 +73,7 @@ l 95.321,-72.205,
 95.917,-71.885,
 r 95.258,-72.142,
 
-*Ð¡µºÎå
+*Ð¡ï¿½ï¿½ï¿½ï¿½
 m 71.291,-72.222,
 l 71.315,-72.163,
 71.636,-72.099,
@@ -121,7 +121,7 @@ l 71.315,-72.163,
 71.766,-72.341,
 r 71.291,-72.222,
 
-*Ð¡µºÁù
+*Ð¡ï¿½ï¿½ï¿½ï¿½
 m 43.493,-80.011,
 l 42.992,-80.246,
 44.149,-80.553,
@@ -145,7 +145,7 @@ l 42.992,-80.246,
 44.505,-79.54,
 r 43.493,-80.011,
 
-*±¾µº
+*ï¿½ï¿½ï¿½ï¿½
 m -107.284,-66.007,
 l -107.795,-66.19,
 -108.876,-66.538,
@@ -572,48 +572,50 @@ r -107.284,-66.007
 <textarea cols=80 rows=15 id=B2>
 </textarea><br>
 
-¿í<input type=text value="4200" size=10 id=Ca> Ô­±í¶«¾­<input type=text value="Õý" size=10 id=Cj><br>
-¸ß<input type=text value="2100" size=10 id=Cb> Ô­±í±±Î³<input type=text value="Õý" size=10 id=Cw><br>
-JÐ¡ÊýÎ»<input type=text value="0" size=10 id=Cn1> WÐ¡ÊýÎ»<input type=text value="0" size=10 id=Cn2><br>
-È¡Ñù²½³¤<input type=text value="10" size=10 id=Cbc><br>
-<input type=button onclick="zhuan()" value="È·¶¨">
+ï¿½ï¿½<input type=text value="4200" size=10 id=Ca> Ô­ï¿½?ï¿½ï¿½<input type=text value="ï¿½ï¿½" size=10 id=Cj><br>
+ï¿½ï¿½<input type=text value="2100" size=10 id=Cb> Ô­ï¿½?Î³<input type=text value="ï¿½ï¿½" size=10 id=Cw><br>
+JÐ¡ï¿½ï¿½Î»<input type=text value="0" size=10 id=Cn1> WÐ¡ï¿½ï¿½Î»<input type=text value="0" size=10 id=Cn2><br>
+È¡ï¿½ï¿½<input type=text value="10" size=10 id=Cbc><br>
+<input type=button onclick="zhuan()" value="È·ï¿½ï¿½">
 
 <script language=javascript>
-Number.prototype.toFixed=function(m){ //IE6.0µÄtoFixed()ÓÐBug,ËùÒÔÖØÐ´
-  var n=this, f='', p=Math.pow(10,m); //pÎª10½øÖÆÒÆÎ»Á¿;
-  if(n<0) n = -n, f = '-';   //°Ñ¸ºÊý×ªÎªÕýÊý
-  var a=Math.floor(n),b=n-a; //·ÖÀëÕûÊýÓëÐ¡Êý
-  b = Math.round(b*p );      //ÒÆÎ»²¢ËÄÉáÎåÈë
-  if(b>=p) a++,b-=p;         //½øÎ»
-  if(m) b = '.'+(p+b+'').substr(1,m); //Ð¡Êý²¿·Ö×ó±ß²¹0
-  else b = '';
-  return f+a+b;
-};
-function zhuan(){
- var s=B1.innerText;
- s=s.replace(/(\r\n)|( )/g,',');
- s=s.replace(/,+/g,',');
- s=s.split(',');
+    Number.prototype.toFixed = function (m) { //IE6.0ï¿½ï¿½toFixed()ï¿½ï¿½Bug,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´
+        var n = this, f = '', p = Math.pow(10, m); //pÎª10ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½;
+        if (n < 0) n = -n, f = '-';   //ï¿½Ñ¸ï¿½ï¿½ï¿½×ªÎªï¿½ï¿½ï¿½ï¿½
+        var a = Math.floor(n), b = n - a; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½
+        b = Math.round(b * p);      //ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (b >= p) a++, b -= p;         //ï¿½ï¿½Î»
+        if (m) b = '.' + (p + b + '').substr(1, m); //Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ß²ï¿½0
+        else b = '';
+        return f + a + b;
+    };
+    function zhuan() {
+        var s = B1.innerText;
+        s = s.replace(/(\r\n)|( )/g, ',');
+        s = s.replace(/,+/g, ',');
+        s = s.split(',');
 
- var a=Ca.value-0, Aj=Cj.value, b=Cb.value-0, Aw=Cw.value, step=Math.floor(Cbc.value-0);
- var n1 = Cn1.value-0, n2 = Cn2.value-0;
- var i,k=0, p='', g, J,W;
- if(step<=0) step=1;
- for(i=0;i<s.length;i++) if(s[i].substr(0,1)=='*') break;
- for(;i<s.length;i++){
-   if(s[i].substr(0,1)=='*') continue;
-   if(s[i]=='') break;
-   g=',';
-   if(s[i]=='m') p+=' m', g=' ', i++,k=0; //moveto
-   if(s[i]=='l') p+=' l', g=' ', i++,k=0; //lineto
-   if(s[i]=='r')                 i++,k=0; //ÇúÏß½áÊø±ê¼Ç
-   J=a*s[i]  /360; if(Aj=='¸º') J=-J; //¾­·ÅËõ
-   W=b*s[i+1]/180; if(Aw=='Õý') W=-W; //Î³·ÅËõ
-   if(!k||k%step==step-1) p += g + ((J+a)%a).toFixed(n1) +','+ (W+b/2).toFixed(n2);
-   k++, i++;
- }
- B2.innerText="  +'"+p.substr(1,p.length-1)+" '";
-}
+        var a = Ca.value - 0, Aj = Cj.value, b = Cb.value - 0, Aw = Cw.value, step = Math.floor(Cbc.value - 0);
+        var n1 = Cn1.value - 0, n2 = Cn2.value - 0;
+        var i, k = 0, p = '', g, J, W;
+        if (step <= 0) step = 1;
+        for (i = 0; i < s.length; i++) if (s[i].substr(0, 1) == '*') break;
+        for (; i < s.length; i++) {
+            if (s[i].substr(0, 1) == '*') continue;
+            if (s[i] == '') break;
+            g = ',';
+            if (s[i] == 'm') p += ' m', g = ' ', i++, k = 0; //moveto
+            if (s[i] == 'l') p += ' l', g = ' ', i++, k = 0; //lineto
+            if (s[i] == 'r')                 i++, k = 0; //ï¿½ï¿½ï¿½ß½ï¿½ï¿½ï¿½ï¿½ï¿½
+            J = a * s[i] / 360;
+            if (Aj == 'ï¿½ï¿½') J = -J; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            W = b * s[i + 1] / 180;
+            if (Aw == 'ï¿½ï¿½') W = -W; //Î³ï¿½ï¿½ï¿½ï¿½
+            if (!k || k % step == step - 1) p += g + ((J + a) % a).toFixed(n1) + ',' + (W + b / 2).toFixed(n2);
+            k++, i++;
+        }
+        B2.innerText = "  +'" + p.substr(1, p.length - 1) + " '";
+    }
 
 
 </script>

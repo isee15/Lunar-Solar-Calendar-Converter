@@ -1,22 +1,21 @@
-
-<script language=javascript src="../╘┤│╠╨Є/eph0.js"></script>
-<script language=javascript src="../╘┤│╠╨Є/eph.js"></script>
-<script language=javascript src="../╘┤│╠╨Є/lunar.js"></script>
-└√╙├─┌║╦╠с╚б╚Є╘┬▒э(─ъ╖▌╩╝╙┌╢м╓┴╦∙╘┌╘┬╖▌)<br>
-╞Ё╩╝─ъ<input type=text value='-103' id=Cy>
-─ъ╩¤=<input type=text value='200' id=Cn>
-<input type=button onclick='calc()' value='╚╖╢и'>
+<script language=javascript src="../╘┤я┐╜я┐╜я┐╜я┐╜/eph0.js"></script>
+<script language=javascript src="../╘┤я┐╜я┐╜я┐╜я┐╜/eph.js"></script>
+<script language=javascript src="../╘┤я┐╜я┐╜я┐╜я┐╜/lunar.js"></script>
+я┐╜я┐╜я┐╜я┐╜я┐╜┌║я┐╜я┐╜я┐╜╚бя┐╜я┐╜я┐╜┬▒я┐╜(я┐╜я┐╜я┐╜╩╝я┐╜┌╢я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜я┐╜┬╖я┐╜)<br>
+я┐╜я┐╜╩╝я┐╜я┐╜<input type=text value='-103' id=Cy>
+я┐╜я┐╜я┐╜я┐╜=<input type=text value='200' id=Cn>
+<input type=button onclick='calc()' value='╚╖я┐╜я┐╜'>
 <div id=out></div>
 
 <script language=javascript>
-function calc(){
- var s='', n=Cn.value-0, y=Cy.value-0;
- var jd=JD.JD(y,6,1)
- for(i=0;i<n;i++){
-  SSQ.calcY(jd+i*365.2422-J2000);
-  if(!SSQ.leap) continue;
-  s+=(y+i)+'─ъ ╚Є'+SSQ.ym[SSQ.leap]+'<br>';
- }
- out.innerHTML=s;
-}
+    function calc() {
+        var s = '', n = Cn.value - 0, y = Cy.value - 0;
+        var jd = JD.JD(y, 6, 1)
+        for (i = 0; i < n; i++) {
+            SSQ.calcY(jd + i * 365.2422 - J2000);
+            if (!SSQ.leap) continue;
+            s += (y + i) + 'я┐╜я┐╜ я┐╜я┐╜' + SSQ.ym[SSQ.leap] + '<br>';
+        }
+        out.innerHTML = s;
+    }
 </script>

@@ -1,59 +1,66 @@
-//Ò»Ğ©¹¤¾ßº¯Êı
-function trim(s){ return s.replace(/(^\s*)|(\s*$)/g, "");  }
+//Ò»Ğ©ï¿½ï¿½ï¿½ßºï¿½ï¿½ï¿½
+function trim(s) {
+    return s.replace(/(^\s*)|(\s*$)/g, "");
+}
 /****************
-ÌìÎÄ¼ÍÄêÓëÆÕÍ¨¼ÍÄêµÄ×ª»»
-****************/
-function year2Ayear(c){ //´«ÈëÆÕÍ¨¼ÍÄê»òÌìÎÄ¼ÍÄê£¬´«»ØÌìÎÄ¼ÍÄê
- var y = String(c).replace(/[^0-9Bb\*-]/g,'');
- var q = y.substr(0,1);
- if( q=='B' || q=='b' || q=='*' ){ //Í¨ÓÃ¼ÍÄê·¨(¹«ÔªÇ°)
-   y = 1-y.substr(1,y.length);
-   if(y>0) { alert('Í¨ÓÃ¼Í·¨µÄ¹«ÔªÇ°¼Í·¨´ÓB.C.1Äê¿ªÊ¼¡£²¢ÇÒÃ»ÓĞ¹«Ôª0Äê'); return -10000; }
- }
- else y -= 0;
- if( y < -4712 )   alert('³¬¹ıB.C. 4713²»×¼'); 
- if( y > 9999  )   alert('³¬¹ı9999ÄêµÄÅ©Àú¼ÆËãºÜ²»×¼¡£');
- return y;
+ ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
+ ****************/
+function year2Ayear(c) { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ê£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+    var y = String(c).replace(/[^0-9Bb\*-]/g, '');
+    var q = y.substr(0, 1);
+    if (q == 'B' || q == 'b' || q == '*') { //Í¨ï¿½Ã¼ï¿½ï¿½ê·¨(ï¿½ï¿½ÔªÇ°)
+        y = 1 - y.substr(1, y.length);
+        if (y > 0) {
+            alert('Í¨ï¿½Ã¼Í·ï¿½ï¿½Ä¹ï¿½ÔªÇ°ï¿½Í·ï¿½ï¿½ï¿½B.C.1ï¿½ê¿ªÊ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ğ¹ï¿½Ôª0ï¿½ï¿½');
+            return -10000;
+        }
+    }
+    else y -= 0;
+    if (y < -4712)   alert('ï¿½ï¿½ï¿½ï¿½B.C. 4713ï¿½ï¿½×¼');
+    if (y > 9999)   alert('ï¿½ï¿½ï¿½ï¿½9999ï¿½ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ï¿½Ü²ï¿½×¼ï¿½ï¿½');
+    return y;
 }
 
-function Ayear2year(y){ //´«ÈëÌìÎÄ¼ÍÄê£¬´«»ØÏÔÊ¾ÓÃµÄ³£¹æ¼ÍÄê
- y -= 0;
- if( y<=0 ) return 'B'+ (-y+1);
- return ''+y;
+function Ayear2year(y) { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ê£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ÃµÄ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    y -= 0;
+    if (y <= 0) return 'B' + (-y + 1);
+    return '' + y;
 }
-function timeStr2hour(s){//Ê±¼ä´®×ªÎªĞ¡Ê±
- var a,b,c;
- s=String(s).replace(/[^0-9:\.]/g,'');
- s=s.split(':');
- if(s.length==1) a=s[0].substr(0,2)-0, b=s[0].substr(2,2)-0, c=s[0].substr(4,2)-0;
- else if(s.length==2) a=s[0]-0, b=s[1]-0, c=0;
- else a=s[0]-0, b=s[1]-0, c=s[2]-0;
- return a+b/60+c/3600;
+function timeStr2hour(s) {//Ê±ï¿½ä´®×ªÎªĞ¡Ê±
+    var a, b, c;
+    s = String(s).replace(/[^0-9:\.]/g, '');
+    s = s.split(':');
+    if (s.length == 1) a = s[0].substr(0, 2) - 0, b = s[0].substr(2, 2) - 0, c = s[0].substr(4, 2) - 0;
+    else if (s.length == 2) a = s[0] - 0, b = s[1] - 0, c = 0;
+    else a = s[0] - 0, b = s[1] - 0, c = s[2] - 0;
+    return a + b / 60 + c / 3600;
 }
 /*********************
-¹¤¾ßº¯Êı£ºcookie¶ÁĞ´º¯Êı
-*********************/
+ ï¿½ï¿½ï¿½ßºï¿½ï¿½ï¿½cookieï¿½ï¿½Ğ´ï¿½ï¿½ï¿½ï¿½
+ *********************/
 function getCookie(name) {
-  var start,end, s = document.cookie;
-  start = s.indexOf(name + '=');  if (start == -1) return '';
-  start += name.length + 1;
-  end = s.indexOf(';', start);
-  if (end == -1) end = s.length;
-  return unescape(s.substring(start, end));
+    var start, end, s = document.cookie;
+    start = s.indexOf(name + '=');
+    if (start == -1) return '';
+    start += name.length + 1;
+    end = s.indexOf(';', start);
+    if (end == -1) end = s.length;
+    return unescape(s.substring(start, end));
 }
-function setCookie(name,value){
-   var Days = 700; //´Ë cookie ½«±»±£´æ¶àÌì
-   var exp  = new Date();
-   exp.setTime(exp.getTime() + Days*86400*1000);
-   document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+function setCookie(name, value) {
+    var Days = 700; //ï¿½ï¿½ cookie ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days * 86400 * 1000);
+    document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
 }
 
 /*********************
-¸øselect¼ÓoptionµÈ
-*********************/
-function addOp(sel,v,t){ //¸øselect¶ÔÏó¼ÓÈëoption
-  var Op = document.createElement("OPTION");
-  Op.value=v;  Op.text=t;
-  sel.add(Op);
+ ï¿½ï¿½selectï¿½ï¿½optionï¿½ï¿½
+ *********************/
+function addOp(sel, v, t) { //ï¿½ï¿½selectï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½option
+    var Op = document.createElement("OPTION");
+    Op.value = v;
+    Op.text = t;
+    sel.add(Op);
 }
 

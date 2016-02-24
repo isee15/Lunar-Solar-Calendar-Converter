@@ -1,116 +1,117 @@
-<script language=javascript src="../Ô´³ÌÐò/eph0.js"></script>
-<script language=javascript src="../Ô´³ÌÐò/eph.js"></script>
-<script language=javascript src="../Ô´³ÌÐò/lunar.js"></script>
-½ÚÆø±íÏßÐÔÄâºÏ<br>
-ÆðÊ¼Äê<input type=text value='1900' id=Cy size=6>
-ÄêÊý<input type=text value='30' id=Cn size=6>
-ÏîÊý<input type=text value='2' id=Sn size=2>
-²ãÊý<input type=text value='3' id=Gn size=2>
-½ÚÆøºÅ<input type=text value='0' id=Qn size=2>
-<input type=button onclick='calc()' value='È·¶¨'><br><br>
-ÐòºÅ±í<br>
-00´º·Ö,01ÇåÃ÷,02¹ÈÓê,03Á¢ÏÄ,04Ð¡Âú,05Ã¢ÖÖ<br>
-06ÏÄÖÁ,07Ð¡Êî,08´óÊî,09Á¢Çï,10´¦Êî,11°×Â¶<br>
-12Çï·Ö,13º®Â¶,14Ëª½µ,15Á¢¶¬,16Ð¡Ñ©,17´óÑ©<br>
-18¶¬ÖÁ,19Ð¡º®,20´óº®,21Á¢´º,22ÓêË®,23¾ªÕÝ<br><br>
-²ãÊý£ºÓÃÓÚ¼ÆËã×î¼Ñ·ÖÊý<br>
-ÏîÊý£ºÄâºÏ¶àÏîÊ½µÄÏîÊý<br><br>
+<script language=javascript src="../Ô´ï¿½ï¿½ï¿½ï¿½/eph0.js"></script>
+<script language=javascript src="../Ô´ï¿½ï¿½ï¿½ï¿½/eph.js"></script>
+<script language=javascript src="../Ô´ï¿½ï¿½ï¿½ï¿½/lunar.js"></script>
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>
+ï¿½ï¿½Ê¼ï¿½ï¿½<input type=text value='1900' id=Cy size=6>
+ï¿½ï¿½ï¿½ï¿½<input type=text value='30' id=Cn size=6>
+ï¿½ï¿½ï¿½ï¿½<input type=text value='2' id=Sn size=2>
+ï¿½ï¿½ï¿½ï¿½<input type=text value='3' id=Gn size=2>
+ï¿½ï¿½ï¿½ï¿½ï¿½<input type=text value='0' id=Qn size=2>
+<input type=button onclick='calc()' value='È·ï¿½ï¿½'><br><br>
+ï¿½ï¿½Å±ï¿½<br>
+00ï¿½ï¿½ï¿½ï¿½,01ï¿½ï¿½ï¿½ï¿½,02ï¿½ï¿½ï¿½ï¿½,03ï¿½ï¿½ï¿½ï¿½,04Ð¡ï¿½ï¿½,05Ã¢ï¿½ï¿½<br>
+06ï¿½ï¿½ï¿½ï¿½,07Ð¡ï¿½ï¿½,08ï¿½ï¿½ï¿½ï¿½,09ï¿½ï¿½ï¿½ï¿½,10ï¿½ï¿½ï¿½ï¿½,11ï¿½ï¿½Â¶<br>
+12ï¿½ï¿½ï¿½,13ï¿½ï¿½Â¶,14Ëªï¿½ï¿½,15ï¿½ï¿½ï¿½ï¿½,16Ð¡Ñ©,17ï¿½ï¿½Ñ©<br>
+18ï¿½ï¿½ï¿½ï¿½,19Ð¡ï¿½ï¿½,20ï¿½ï¿½,21ï¿½ï¿½ï¿½ï¿½,22ï¿½ï¿½Ë®,23ï¿½ï¿½ï¿½ï¿½<br><br>
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½<br>
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br><br>
 
 <div id=out></div>
 
 <script language=javascript>
-function jfcz(a){ //×î´óÖ÷Ôª¸ßË¹·¨½â·½³Ì×é,aÊý×é±íÊ¾·½³Ì×é(a11,a12,a13,¡­¡­,b1,  a21,a22,a23,¡­¡­,b2, a31¡­¡­)
- var hn=floor((-1+sqrt(4*a.length+1)+1e-5)/2); //hnÊÇ·½³ÌÐÐÊý
- var i,j,k,hw=hn+1,len=hn*hw; //hwÎªÐÐ¿í,lenÊý×éÔªËØ×Ü¸öÊý
- var p,pm,c,max; //p,pmÔªËØ¶¨Î»±äÁ¿µÈÁÙÊ±±äÁ¿
- var r=new Array();
- for(i=0;i<len;i++) r[i]=a[i];
- for(i=0;i<hn;i++){
-   p=i*hw+i; //p´ý¶¨Ö÷ÔªÎ»ÖÃ
-   for(j=p,pm=p,max=0;j<len;j+=hw){ //Ñ¡×î´óÖ÷Ôª,Î»ÖÃÔÚpm
-     c=abs(r[j]);
-     if(c>max) max=c,pm=j;
-   }
-   for(j=0;j<hw-i;j++) c=r[p+j],r[p+j]=r[pm+j],r[pm+j]=c; //ÐÐ½»»»
-   for(j=i;j<len;j+=hw){ //¸ßË¹ÏûÈ¥·¨
-     if(j==p) continue;  //µ±Ç°ÐÐ²»ÄÜÏûÔª
-     c=r[j]/r[p];     //ÐÐÏà¼õÏµÊý
-     for(k=0;k<hw-i;k++) r[j+k]-=r[p+k]*c; //ÐÐÏà¼õÏûÔª
-   }
- }
- for(i=0;i<hn;i++) r[i]=r[i*hw+hn]/r[i*hw+i]; //½á¹û
- r.length=hn; return r;
-}
-function dxs_zxec(f,x,n){//¶àÏîÊ½ÄâºÏ(Ê¹ÓÃ×îÐ¡¶þ³Ë·¨),ÐòÁÐµÄµãÊýÍ¬xÊý×éÈ·¶¨,fÊý×éÊÇxµÄº¯Êý,nÊÇ¶àÏîÊ½µÄÏîÊý
-  var fc=new Array(), Xk=new Array();
-  var i,j,k,p,len=n*(n+1),xn=x.length;
-  for(i=0;i<len;i++) fc[i]=0;
-  for(k=0;k<xn;k++){
-   for(i=1,Xk[0]=1;i<n;i++) Xk[i]=Xk[i-1]*x[k]; //Ëã³öx[k]µÄ¸÷´Î·½
-   for(i=0;i<n;i++){
-     p=i*(n+1);
-     for(j=0;j<n;j++) fc[p+j]+=Xk[j]*Xk[i];
-     fc[p+n]+=f[k]*Xk[i];
-   }
-  }
-  return jfcz(fc);
-}
+    function jfcz(a) { //ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½Ë¹ï¿½ï¿½ï¿½â·½ï¿½ï¿½ï¿½ï¿½,aï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(a11,a12,a13,ï¿½ï¿½ï¿½ï¿½,b1,  a21,a22,a23,ï¿½ï¿½ï¿½ï¿½,b2, a31ï¿½ï¿½ï¿½ï¿½)
+        var hn = floor((-1 + sqrt(4 * a.length + 1) + 1e-5) / 2); //hnï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        var i, j, k, hw = hn + 1, len = hn * hw; //hwÎªï¿½Ð¿ï¿½,lenï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½ï¿½Ü¸ï¿½ï¿½ï¿½
+        var p, pm, c, max; //p,pmÔªï¿½Ø¶ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
+        var r = new Array();
+        for (i = 0; i < len; i++) r[i] = a[i];
+        for (i = 0; i < hn; i++) {
+            p = i * hw + i; //pï¿½ï¿½ï¿½ï¿½ÔªÎ»ï¿½ï¿½
+            for (j = p, pm = p, max = 0; j < len; j += hw) { //Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Ôª,Î»ï¿½ï¿½ï¿½ï¿½pm
+                c = abs(r[j]);
+                if (c > max) max = c, pm = j;
+            }
+            for (j = 0; j < hw - i; j++) c = r[p + j], r[p + j] = r[pm + j], r[pm + j] = c; //ï¿½Ð½ï¿½ï¿½ï¿½
+            for (j = i; j < len; j += hw) { //ï¿½ï¿½Ë¹ï¿½ï¿½È¥ï¿½ï¿½
+                if (j == p) continue;  //ï¿½ï¿½Ç°ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½Ôª
+                c = r[j] / r[p];     //ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+                for (k = 0; k < hw - i; k++) r[j + k] -= r[p + k] * c; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôª
+            }
+        }
+        for (i = 0; i < hn; i++) r[i] = r[i * hw + hn] / r[i * hw + i]; //ï¿½ï¿½ï¿½
+        r.length = hn;
+        return r;
+    }
+    function dxs_zxec(f, x, n) {//ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½(Ê¹ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½Ë·ï¿½),ï¿½ï¿½ï¿½ÐµÄµï¿½ï¿½ï¿½Í¬xï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½,fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Äºï¿½ï¿½ï¿½,nï¿½Ç¶ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        var fc = new Array(), Xk = new Array();
+        var i, j, k, p, len = n * (n + 1), xn = x.length;
+        for (i = 0; i < len; i++) fc[i] = 0;
+        for (k = 0; k < xn; k++) {
+            for (i = 1, Xk[0] = 1; i < n; i++) Xk[i] = Xk[i - 1] * x[k]; //ï¿½ï¿½ï¿½x[k]ï¿½Ä¸ï¿½ï¿½Î·ï¿½
+            for (i = 0; i < n; i++) {
+                p = i * (n + 1);
+                for (j = 0; j < n; j++) fc[p + j] += Xk[j] * Xk[i];
+                fc[p + n] += f[k] * Xk[i];
+            }
+        }
+        return jfcz(fc);
+    }
 
-function dxs(f,x){
- var i,v=0,X=1;
- for(i=0;i<f.length;i++) v+=f[i]*X, X*=x;
- return v;
-}
-function gz(a,n){ //¹éÕûÊ±¼ä
- var i,b=new Array();
- a=a-Math.floor(a);
- for(i=0;i<n;i++){
-  a=1/a;
-  b[i]=Math.floor(a);
-  a-=b[i];
- }
- var r=new Array(1,b[n-1]);
- for(i=n-2;i>=0;i--){
-   a=r[1];
-   r[1]=a*b[i]+r[0];
-   r[0]=a;
- }
- return r;
-}
-function calc(){
- var f=new Array(),x=new Array(),i;
- var n=Cn.value-0; //ÐòÁÐµãÊý(ÄêÊý)
- var y=Cy.value-0; //ÆðÊ¼Äê·Ý
- var q=Qn.value-0; //½ÚÆøÐòºÅ
- var m=Sn.value-0;
- var dy=103;
- var s='';
- for(i=0;i<n;i++){
-  f[i]=obb.qi_accurate((y-2000+q/24+i)*pi2);
-  x[i]=i;
-  s+=JD.JD2str(f[i]+J2000)+'<br>';
- }
- var r=dxs_zxec(f,x,m);
- //ÇóÎó²î
- var v1=0,v2=0,v;
- for(i=0;i<n;i++){
-   v = Math.abs(dxs(r,x[i])-f[i]);
-   v2 += v*v;
-   if(v>v1) v1=v;
- }
- v2=Math.sqrt(v2/(n-1));
- v1*=60*24;
- v2*=60*24;
+    function dxs(f, x) {
+        var i, v = 0, X = 1;
+        for (i = 0; i < f.length; i++) v += f[i] * X, X *= x;
+        return v;
+    }
+    function gz(a, n) { //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+        var i, b = new Array();
+        a = a - Math.floor(a);
+        for (i = 0; i < n; i++) {
+            a = 1 / a;
+            b[i] = Math.floor(a);
+            a -= b[i];
+        }
+        var r = new Array(1, b[n - 1]);
+        for (i = n - 2; i >= 0; i--) {
+            a = r[1];
+            r[1] = a * b[i] + r[0];
+            r[0] = a;
+        }
+        return r;
+    }
+    function calc() {
+        var f = new Array(), x = new Array(), i;
+        var n = Cn.value - 0; //ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
+        var y = Cy.value - 0; //ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½
+        var q = Qn.value - 0; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        var m = Sn.value - 0;
+        var dy = 103;
+        var s = '';
+        for (i = 0; i < n; i++) {
+            f[i] = obb.qi_accurate((y - 2000 + q / 24 + i) * pi2);
+            x[i] = i;
+            s += JD.JD2str(f[i] + J2000) + '<br>';
+        }
+        var r = dxs_zxec(f, x, m);
+        //ï¿½ï¿½ï¿½ï¿½ï¿½
+        var v1 = 0, v2 = 0, v;
+        for (i = 0; i < n; i++) {
+            v = Math.abs(dxs(r, x[i]) - f[i]);
+            v2 += v * v;
+            if (v > v1) v1 = v;
+        }
+        v2 = Math.sqrt(v2 / (n - 1));
+        v1 *= 60 * 24;
+        v2 *= 60 * 24;
 
- var R=gz(r[1],Gn.value-0);
+        var R = gz(r[1], Gn.value - 0);
 
- out.innerHTML=s
-   +'Æðµã a='+r[0].toFixed(4)+'(J2000ÆðËãµÄÈåÂÔÈÕÊý UT)<br>'
-   +'Ð±ÂÊ b='+r[1].toFixed(5)+'<br>'
-   +'·ÖÊý ' +R[0]+'/'+R[1]+'£¬¼´Ã¿'+R[1]+'Äê½Ó½ü»Ø¹éÔ­À´Ê±¼ä'+'<br>'
-   +'×î´óÎó²î'+v1.toFixed(2)+'·Ö<br>'
-   +'¾ù·½Îó²î'+v2.toFixed(2)+'·Ö<br>'
-   +'½ÚÆøÈåÂÔÈÕÊý(UT) = a + b*n£¬Ê½ÖÐnÊÇÏà¶ÔÆðÊ¼ÄêÆ«ÒÆµÄÄêÊý'; 
-}
+        out.innerHTML = s
+                + 'ï¿½ï¿½ï¿½ a=' + r[0].toFixed(4) + '(J2000ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UT)<br>'
+                + 'Ð±ï¿½ï¿½ b=' + r[1].toFixed(5) + '<br>'
+                + 'ï¿½ï¿½ï¿½ï¿½ ' + R[0] + '/' + R[1] + 'ï¿½ï¿½ï¿½ï¿½Ã¿' + R[1] + 'ï¿½ï¿½Ó½ï¿½Ø¹ï¿½Ô­ï¿½ï¿½Ê±ï¿½ï¿½' + '<br>'
+                + 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½' + v1.toFixed(2) + 'ï¿½ï¿½<br>'
+                + 'ï¿½ï¿½ï¿½ï¿½ï¿½' + v2.toFixed(2) + 'ï¿½ï¿½<br>'
+                + 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(UT) = a + b*nï¿½ï¿½Ê½ï¿½ï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½Æ«ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½';
+    }
 
 </script>
