@@ -63,6 +63,7 @@ public static function SolarToLunar($solar)
 
 ##API For python
 ```
+//support pypi "pip install LunarSolarConverter"
 /**
 *农历转公历
 */
