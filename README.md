@@ -1,7 +1,7 @@
 # Lunar Solar Calendar Converter
 公历(阳历) 农历(阴历)转换，支持时间段从1900-2100<br>
 如果需要更长的时间段，利用generate.htm生成的数据即可。<br>
-支持各种编程语言 C#,java,Objective-C,php,Python,javascript(nodejs),C/C++,ruby,swift等<br>
+支持各种编程语言 C#,java,Objective-C,php,Python,javascript(nodejs),C/C++,ruby,swift,golang等<br>
 支持Mac，Windows，Android，WP多种平台
 
 ###数据验证
@@ -18,7 +18,8 @@
 ### 基本原理
 * 查表。有2个数据表，对于每一年，一张表存着X年正月初一对应的公历年月日，另一张表存着X年农历每个月的天数以及闰月的月份。
 然后根据这两张表进行日期的偏移。
-* 所有数据通过了微软ChineseLunisolarCalendar类的比对。比对程序在C\#版本中。
+* 原始数据通过了微软ChineseLunisolarCalendar类的比对。比对程序在C\#版本中。
+* Swift由于苹果官方有NSCalendarIdentifierChinese，因此有跟Swift官方匹配的generate.swift。实际比对的结果，微软与苹果的数据有部分不一致。比如Apple 2057/9/28->2057年九月〇明显有问题。
 
 
 
@@ -64,6 +65,7 @@ public static function SolarToLunar($solar)
 ##API For python
 ```
 //support pypi "pip install LunarSolarConverter"
+//refer pypiDemo
 /**
 *农历转公历
 */
@@ -125,4 +127,17 @@ class func LunarToSolar( lunar:Lunar)->Solar
 *公历转农历
 */
 class func SolarToLunar( solar:Solar)->Lunar
+```
+
+##API For Go
+```
+/**
+*农历转公历
+*/
+func  LunarToSolar(lunar Lunar) *Solar
+
+/**
+*公历转农历
+*/
+func SolarToLunar(solar Solar) *Lunar
 ```
