@@ -70,7 +70,8 @@ long SolarToInt(int y, int m, int d) {
 }
 
 Solar SolarFromInt(long g) {
-    long y = (10000 * g + 14780) / 3652425;
+    //C版本的SolarFromInt函数有溢出，导致计算结果错误
+    long y = (10000LL * g + 14780) / 3652425;
     long ddd = g - (365 * y + y / 4 - y / 100 + y / 400);
     if (ddd < 0) {
         y--;
