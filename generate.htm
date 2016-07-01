@@ -3739,7 +3739,8 @@
                 '七': 7,
                 '八': 8,
                 '九': 9,
-                '十': 10
+                '十': 10,
+                '一': 1,
             };
             for (var y = begin - 2; y < end + 2; y++) {
                 var i = 0,
@@ -3751,7 +3752,7 @@
                 var isbegin = 0;
                 for (i = 0; i < 14; i++) {
                     if (SSQ.HS[i + 1] > SSQ.ZQ[24]) break;
-                    if (SSQ.ym[i] == '正' && !(SSQ.leap && i == SSQ.leap)) {
+                    if (i > 0 && (SSQ.ym[i] == '正' || SSQ.ym[i] == '一') && !(SSQ.leap && i == SSQ.leap)) {
                         isbegin = 1;
                         var solarM = parseInt(JD.JD2str(SSQ.HS[i] + J2000).substr(6, 2));
                         var solarD = parseInt(JD.JD2str(SSQ.HS[i] + J2000).substr(9, 2));
@@ -3780,7 +3781,7 @@
                 SSQ.calcY(int2((y + 1 - 2000) * 365.2422 + 180));
                 for (i = 0; i < 14; i++) {
                     if (SSQ.HS[i + 1] > SSQ.ZQ[24]) break;
-                    if (SSQ.ym[i] == '正') break;
+                    if (i > 0 && (SSQ.ym[i] == '正' || SSQ.ym[i] == '一')) break;
 
                     if (SSQ.leap && i == SSQ.leap) {
                         s1 = '1 ';
