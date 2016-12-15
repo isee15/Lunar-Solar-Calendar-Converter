@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据转换</title>
+</head>
+<body>
+<input type=text size=40 id=lunarMonth value=0x1694>
+<input type=button onclick="expandLunar()" value="展开">
+
+<div id=result></div>
+</body>
+<script>
+    function expandLunar() {
+        var ret = "";
+        var vv = lunarMonth.value;
+        var leapIndex = (vv >> 13) & 0xf;
+        var months = []
+        for (var i = 0; i < 13; i++) {
+            months[i] = (vv >> (12 - i)) & 0x1;
+        }
+        for (var i = 0; i < 13; i++) {
+            if (leapIndex == 0 && i == 12) {
+                continue;
+            }
+            if (i > 0 && i == leapIndex) {
+                ret += "闰";
+            }
+            var month = (leapIndex > 0 && i >= leapIndex) ? i : (i + 1);
+            if (months[i] == 1) {
+                ret += month + "月30天 "
+            }
+            else if (months[i] == 0) {
+                ret += month + "月29天 "
+            }
+        }
+        result.innerHTML = ret;
+    }
+</script>
+</html>
