@@ -44,9 +44,9 @@ public class Demo {
 
 	public static void main(String[] args) {
 		Solar solar = new Solar();
-		solar.solarYear = 2015;
+		solar.solarYear = 2017;
 		solar.solarMonth = 1;
-		solar.solarDay = 27;
+		solar.solarDay = 4;
 		System.out.println(dump(solar));
 		Lunar lunar = LunarSolarConverter.SolarToLunar(solar);
 		System.out.println(dump(lunar));
