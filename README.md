@@ -4,7 +4,7 @@
 支持各种编程语言 C#,java,Objective-C,php,Python,javascript(nodejs),C/C++,ruby,swift,golang等<br>
 支持Mac，Windows，Android，WP多种平台
 
-###数据验证
+### 数据验证
 ```
 1.用io.js(nodejs)写了一个httpserver，各种语言可以通过下面的http接口验证不同实现的数据一致性。
 在javascript目录下node check.js启动
@@ -23,7 +23,7 @@
 
 
 
-##API For CSharp or Java
+## API For CSharp or Java
 ```
 /**
 *农历转公历
@@ -36,7 +36,7 @@ public static Solar LunarToSolar(Lunar lunar)
 public static Lunar SolarToLunar(Solar solar)
 ```
 
-##API For Objective-C
+## API For Objective-C
 ```
 /**
 *农历转公历
@@ -49,7 +49,7 @@ public static Lunar SolarToLunar(Solar solar)
 + (Lunar *)solarToLunar:(Solar *)solar;
 ```
 
-##API For php
+## API For php
 ```
 /**
 *农历转公历
@@ -62,7 +62,7 @@ public static function LunarToSolar($lunar)
 public static function SolarToLunar($solar)
 ```
 
-##API For python
+## API For python
 ```
 //support pypi "pip install LunarSolarConverter"
 //refer pypiDemo
@@ -77,7 +77,7 @@ def LunarToSolar(self, lunar):
 def SolarToLunar(self, solar):
 ```
 
-##API For javascript
+## API For javascript
 ```
 /**
 *农历转公历
@@ -90,7 +90,7 @@ this.LunarToSolar = function (lunar)
 this.SolarToLunar = function (solar)
 ```
 
-##API For C/C++
+## API For C/C++
 ```
 /**
 *农历转公历
@@ -103,7 +103,7 @@ Solar LunarToSolar(Lunar lunar);
 Lunar SolarToLunar(Solar solar);
 ```
 
-##API For ruby
+## API For ruby
 ```
 /**
 *农历转公历
@@ -116,7 +116,7 @@ def LunarToSolar(lunar)
 def SolarToLunar(solar)
 ```
 
-##API For swift
+## API For swift
 ```
 /**
 *农历转公历
@@ -129,7 +129,7 @@ class func LunarToSolar( lunar:Lunar)->Solar
 class func SolarToLunar( solar:Solar)->Lunar
 ```
 
-##API For Go
+## API For Go
 ```
 /**
 *农历转公历
