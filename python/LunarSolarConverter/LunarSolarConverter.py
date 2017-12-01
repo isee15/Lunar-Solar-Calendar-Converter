@@ -25,21 +25,20 @@ def GetBitInt(data, length, shift):
 
 def SolarToInt(y, m, d):
     m = (m + 9) % 12
-    y -= m / 10
-    return 365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (d - 1)
+    y -= m // 10
+    return 365 * y + y // 4 - y // 100 + y // 400 + (m * 306 + 5) // 10 + (d - 1)
 
 
 def SolarFromInt(g):
-    y = (10000 * g + 14780) / 3652425
-    ddd = g - (365 * y + y / 4 - y / 100 + y / 400)
+    y = (10000 * g + 14780) // 3652425
+    ddd = g - (365 * y + y // 4 - y // 100 + y // 400)
     if ddd < 0:
         y -= 1
-        ddd = g - (365 * y + y / 4 - y / 100 + y / 400)
-
-    mi = (100 * ddd + 52) / 3060
+        ddd = g - (365 * y + y // 4 - y // 100 + y // 400)
+    mi = (100 * ddd + 52) // 3060
     mm = (mi + 2) % 12 + 1
-    y += (mi + 2) / 12
-    dd = ddd - (mi * 306 + 5) / 10 + 1
+    y += (mi + 2) // 12
+    dd = ddd - (mi * 306 + 5) // 10 + 1
     solar = Solar(y, mm, dd)
     return solar
 
@@ -203,4 +202,12 @@ if __name__ == '__main__':
     pprint(vars(lunar))
     solar = converter.LunarToSolar(lunar)
     pprint(vars(solar))
-    print "Done"
+
+    lunar = Lunar(1998, 2, 3, isleap=False)
+    pprint(vars(lunar))
+    solar = converter.LunarToSolar(lunar)
+    pprint(vars(solar))
+    lunar = converter.SolarToLunar(solar)
+    pprint(vars(lunar))
+
+    print("Done")
