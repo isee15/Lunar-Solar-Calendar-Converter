@@ -34,4 +34,4 @@ while curDate < endDate:
 
     curDate = curDate + datetime.timedelta(days=1)
 
-print "Check Done"
+print("Check Done")
