@@ -141,3 +141,16 @@ func  LunarToSolar(lunar Lunar) *Solar
 */
 func SolarToLunar(solar Solar) *Lunar
 ```
+
+## API For Dart
+```
+/**
+*农历转公历
+*/
+static lunarToSolar(Lunar lunar) 
+
+/**
+*公历转农历
+*/
+static solarToLunar(Solar solar)
+```
