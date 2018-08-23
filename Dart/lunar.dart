@@ -1,3 +1,5 @@
+part of lunar_calendar_converter;
+
 class Lunar {
   //农历对应的公历年份。如 2018 表示与公历公元 2018 年对应的农历戊戌年；-200 表示与公历公元前 200 年对应的农历辛丑年；0/-1 年均表示公历公元前 1 年，农历庚申年。
   int _lunarYear;
