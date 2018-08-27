@@ -1,3 +1,5 @@
+part of lunar_calendar_converter;
+
 class Solar {
   int _solarYear;
   int solarMonth;
@@ -17,7 +19,9 @@ class Solar {
     _solarYear = v;
   }
 
-  int get solarYear => _solarYear;
+  get solarYear => _solarYear;
+
+  get dateTime => DateTime(_solarYear, solarMonth, solarDay);
 
   toString() {
     String result = "";

@@ -1,8 +1,10 @@
-import 'lunar.dart';
-import 'solar.dart';
+library lunar_calendar_converter;
+
+part 'lunar.dart';
+part 'solar.dart';
 
 class LunarSolarConverter {
-  static List<int> lunar_month_days = [
+  static List<int> _lunar_month_days = [
     1887,
     0x1694,
     0x16aa,
@@ -230,7 +232,7 @@ class LunarSolarConverter {
     0x15ac
   ];
 
-  static List<int> solar_1_1 = [
+  static List<int> _solar_1_1 = [
     1887,
     0xec04c,
     0xec23f,
@@ -458,18 +460,18 @@ class LunarSolarConverter {
     0x107e48
   ];
 
-  static getBitInt(int data, int length, int shift) {
+  static _getBitInt(int data, int length, int shift) {
     return (data & (((1 << length) - 1) << shift)) >> shift;
   }
 
   //早于 1582 年 10 月的日期可能不准确
-  static solarToInt(int y, int m, int d) {
+  static _solarToInt(int y, int m, int d) {
     m = (m + 9) % 12;
     y = y - (m / 10).floor();
     return 365 * y + (y / 4).floor() - (y / 100).floor() + (y / 400).floor() + ((m * 306 + 5) / 10).floor() + (d - 1);
   }
 
-  static solarFromInt(int data) {
+  static _solarFromInt(int data) {
     int y = ((10000 * data + 14780) / 3652425).floor();
     int ddd = data - (365 * y + (y / 4).floor() - (y / 100).floor() + (y / 400).floor());
 
@@ -486,9 +488,9 @@ class LunarSolarConverter {
     return Solar(solarYear: y, solarMonth: mm, solarDay: dd);
   }
 
-  static lunarToSolar(Lunar lunar) {
-    int days = lunar_month_days[lunar.lunarYear - lunar_month_days[0]];
-    int leap = getBitInt(days, 4, 13);
+  static Solar lunarToSolar(Lunar lunar) {
+    int days = _lunar_month_days[lunar.lunarYear - _lunar_month_days[0]];
+    int leap = _getBitInt(days, 4, 13);
     int offset = 0;
     int loop_end = leap;
 
@@ -501,46 +503,46 @@ class LunarSolarConverter {
     }
 
     for (int i = 0; i < loop_end; i++) {
-      offset += (getBitInt(days, 1, 12 - i) == 1 ? 30 : 29);
+      offset += (_getBitInt(days, 1, 12 - i) == 1 ? 30 : 29);
     }
 
     offset += lunar.lunarDay;
 
-    int solar11 = solar_1_1[lunar.lunarYear - solar_1_1[0]];
+    int solar11 = _solar_1_1[lunar.lunarYear - _solar_1_1[0]];
 
-    int y = getBitInt(solar11, 12, 9);
-    int m = getBitInt(solar11, 4, 5);
-    int d = getBitInt(solar11, 5, 0);
+    int y = _getBitInt(solar11, 12, 9);
+    int m = _getBitInt(solar11, 4, 5);
+    int d = _getBitInt(solar11, 5, 0);
 
-    return solarFromInt(solarToInt(y, m, d) + offset - 1);
+    return _solarFromInt(_solarToInt(y, m, d) + offset - 1);
   }
 
-  static solarToLunar(Solar solar) {
+  static Lunar solarToLunar(Solar solar) {
     Lunar lunar = Lunar();
-    int index = solar.solarYear - solar_1_1[0];
+    int index = solar.solarYear - _solar_1_1[0];
     int data = (solar.solarYear << 9) | (solar.solarMonth << 5) | (solar.solarDay);
     int solar11 = 0;
 
-    if (solar_1_1[index] > data) {
+    if (_solar_1_1[index] > data) {
       index--;
     }
 
-    solar11 = solar_1_1[index];
-    int y = getBitInt(solar11, 12, 9);
-    int m = getBitInt(solar11, 4, 5);
-    int d = getBitInt(solar11, 5, 0);
-    int offset = solarToInt(solar.solarYear, solar.solarMonth, solar.solarDay) - solarToInt(y, m, d);
+    solar11 = _solar_1_1[index];
+    int y = _getBitInt(solar11, 12, 9);
+    int m = _getBitInt(solar11, 4, 5);
+    int d = _getBitInt(solar11, 5, 0);
+    int offset = _solarToInt(solar.solarYear, solar.solarMonth, solar.solarDay) - _solarToInt(y, m, d);
 
-    int days = lunar_month_days[index];
-    int leap = getBitInt(days, 4, 13);
+    int days = _lunar_month_days[index];
+    int leap = _getBitInt(days, 4, 13);
 
-    int lunarY = index + solar_1_1[0];
+    int lunarY = index + _solar_1_1[0];
     int lunarM = 1;
     int lunarD = 1;
     offset += 1;
 
     for (int i = 0; i < 13; i++) {
-      int dm = getBitInt(days, 1, 12 - i) == 1 ? 30 : 29;
+      int dm = _getBitInt(days, 1, 12 - i) == 1 ? 30 : 29;
 
       if (offset > dm) {
         lunarM++;
