@@ -98,7 +98,7 @@ class LunarSolarConverter
   def solar_to_lunar(solar)
     lunar = Lunar.new(0, 0, 0, false)
     index = solar.solar_year - SOLAR11.first
-    data = (solar.solar_year << 9) | (solar.solar_year << 5) | solar.solar_year
+    data = (solar.solar_year << 9) | (solar.solar_month << 5) | solar.solar_day
 
     index -= 1 if SOLAR11[index] > data
     solar11 = SOLAR11[index]
