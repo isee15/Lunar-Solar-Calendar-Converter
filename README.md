@@ -21,7 +21,9 @@
 * 原始数据通过了微软ChineseLunisolarCalendar类的比对。比对程序在C\#版本中。
 * Swift由于苹果官方有NSCalendarIdentifierChinese，因此有跟Swift官方匹配的generate.swift。实际比对的结果，微软与苹果的数据有部分不一致。比如Apple 2057/9/28->2057年九月〇明显有问题。
 
-
+### TODO
+- 干支
+- 星座
 
 ## API For CSharp or Java
 ```
