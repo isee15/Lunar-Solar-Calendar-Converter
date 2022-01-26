@@ -16,6 +16,7 @@ class Solar {
 	public int solarYear;
 }
 
+// TODO: 干支， 星座
 public class LunarSolarConverter {
 	/*
 	 * |----4位闰月|-------------13位1为30天，0为29天|
