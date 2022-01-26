@@ -16,7 +16,6 @@ class Solar {
 	public int solarYear;
 }
 
-// TODO: 干支， 星座
 public class LunarSolarConverter {
 	/*
 	 * |----4位闰月|-------------13位1为30天，0为29天|
@@ -98,19 +97,6 @@ public class LunarSolarConverter {
 		return 365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10
 				+ (d - 1);
 	}
-
-	/**
-	 * 
-	 * @param lunarYear 农历年份
-	 * @return String of Ganzhi: 甲子年
-	 * Tiangan:甲乙丙丁戊己庚辛壬癸<br/>Dizhi: 子丑寅卯辰巳无为申酉戌亥
-	 */
-	public static String lunarYearToGanZhi(int lunarYear){
-		final String[] tianGan = {"甲","乙","丙","丁","戊","己","庚","辛","壬","癸"};
-		final String[] diZhi = {"子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"};
-		return tianGan[(lunarYear-4) % 10]+diZhi[(lunarYear-4) % 12]+"年";
-	}
-
 	
 	private static Solar SolarFromInt(long g) {
 		long y = (10000 * g + 14780) / 3652425;

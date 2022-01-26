@@ -52,6 +52,9 @@ public class Demo {
 		System.out.println(dump(lunar));
 		solar = LunarSolarConverter.LunarToSolar(lunar);
 		System.out.println(dump(solar));
-		System.out.println(LunarSolarConverter.lunarYearToGanZhi(2015));
+		System.out.println(MiscHelper.lunarYearToGanZhi(2015));
+		System.out.println(MiscHelper.lunarYearToGanZhi(1894));
+		System.out.println(MiscHelper.lunarYearToAnimal(2022));
+		System.out.println(MiscHelper.constellation(1,27));
 	}
 }
