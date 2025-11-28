@@ -1,6 +1,8 @@
 /**
  * Created by isee15 on 15/1/14.
  */
+// TODO: 星座、干支、生肖、节气
+
 function Lunar() {
     this.isleap = false;
     this.lunarDay = 0;
